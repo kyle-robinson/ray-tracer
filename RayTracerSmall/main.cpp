@@ -32,6 +32,10 @@
 #include <sstream>
 #include <string.h>
 
+#include "Timer.h"
+#include "HeapManager.h"
+#include "MemoryManager.h"
+
 #if defined __linux__ || defined __APPLE__
 // "Compiled for Linux
 #else
@@ -330,7 +334,7 @@ void SmoothScaling()
 		spheres.push_back(Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
 		spheres.push_back(Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
 		render(spheres, r);
-		std::cout << "Rendered and saved spheres" << r << ".ppm" << std::endl;
+		std::cout << "Rendered and saved spheres" << r << ".ppm" << '\n';
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
 
@@ -345,9 +349,28 @@ int main(int argc, char **argv)
 {
 	// This sample only allows one choice per program execution. Feel free to improve upon this
 	srand(13);
+
+	Timer timer;
+	Heap* heapChunk = HeapManager::CreateHeap( "HeapChunk" );
+	Heap* heapChar = HeapManager::CreateHeap( "HeapChar" );
+
 	//BasicRender();
 	SimpleShrinking();
 	//SmoothScaling();
+
+	// Print time taken to render
+	float timeElapsed = timer.Mark();
+	std::cout << "[TIME ELAPSED]\t" << timeElapsed << '\n';
+
+	// Print heap information
+	std::cout << "\n\nHEAP INFORMATION\n\n";
+	HeapManager::CheckAllHeaps();
+
+	std::cout << "\nDELETING HEAPS\n\n";
+	HeapManager::DeleteHeaps();
+
+	heapChunk = nullptr;
+	heapChar = nullptr;
 
 	return 0;
 }

@@ -11,7 +11,7 @@ void Heap::AllocateMemory( Header* header, int size )
 {
 	// Update memory allocation data
 	totalMemoryAllocated += size;
-	if (totalMemoryAllocated > peakMemoryAllocated)
+	if ( totalMemoryAllocated > peakMemoryAllocated )
 		peakMemoryAllocated = totalMemoryAllocated;
 
 	header->size = size;
@@ -45,12 +45,12 @@ void Heap::DeallocateMemory( Header* header, int size )
 void Heap::PrintHeapInformation()
 {
 	std::cout << "Printing heap information...\n\n";
-	std::cout << "Total Memory:\t" << totalMemoryAllocated << std::endl;
-	std::cout << "Peak Memory:\t" << peakMemoryAllocated << std::endl;
+	std::cout << "Total Memory:\t" << totalMemoryAllocated << '\n';
+	std::cout << "Peak Memory:\t" << peakMemoryAllocated << '\n';
 
 	if ( pHeader != nullptr )
 	{
-		std::cout << "\n| Address |\t\t| Type |\t\t| Size |\n";
+		std::cout << "\n| Address |\t\t\t| Type |\t\t| Size |\n";
 
 		// Iterate through each element in the heap
 		size_t size = sizeof( Header );
@@ -58,7 +58,7 @@ void Heap::PrintHeapInformation()
 		while ( pCurrentHeader != nullptr )
 		{
 			auto& start = *( pCurrentHeader + size );
-			std::cout << &start << "\t\t" << typeid( start ).name() << "\t\t" << pCurrentHeader->size << std::endl;
+			std::cout << &start << "\t\t" << typeid( start ).name() << "\t\t" << pCurrentHeader->size << '\n';
 
 			if ( pCurrentHeader->pNext == nullptr )
 				break;
@@ -67,7 +67,7 @@ void Heap::PrintHeapInformation()
 		}
 	}
 
-	std::cout << std::endl;
+	std::cout << "\n\n";
 }
 
 void Heap::CheckHeapIntegrity()
@@ -118,5 +118,7 @@ void Heap::CheckHeapIntegrity()
 		std::cout << "[INFO] Heap::CheckIntegrity\n";
 		std::cout << "[INFO] No errors found in heap:\t" << heapName;
 	}
+
+	std::cout << "\n\n---------------------------------\n\n";
 #endif
 }
