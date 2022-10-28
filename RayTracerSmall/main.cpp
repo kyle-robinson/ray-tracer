@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "Timer.h"
+#include "Console.h"
 #include "HeapManager.h"
 #include "MemoryManager.h"
 
@@ -359,13 +360,16 @@ int main(int argc, char **argv)
 	//SmoothScaling();
 
 	// Print time taken to render
+	Console::SetColor( Console::Color::CYAN );
 	float timeElapsed = timer.Mark();
 	std::cout << "[TIME ELAPSED]\t" << timeElapsed << '\n';
 
 	// Print heap information
+	Console::SetColor( Console::Color::MAGENTA );
 	std::cout << "\n\nHEAP INFORMATION\n\n";
 	HeapManager::CheckAllHeaps();
 
+	Console::SetColor( Console::Color::BLUE );
 	std::cout << "\nDELETING HEAPS\n\n";
 	HeapManager::DeleteHeaps();
 

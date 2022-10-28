@@ -1,5 +1,6 @@
 #include "MemoryManager.h"
 #include "HeapManager.h"
+#include "Console.h"
 #include <iostream>
 
 void* operator new ( size_t size )
@@ -35,9 +36,11 @@ void operator delete ( void* pMem )
 {
 	// Get the memory location of the header
 	Header* pHeader = (Header*)( (char*)pMem - sizeof( Header ) );
+
 #ifdef _DEBUG
 	if ( pHeader->check != DEADCODE )
 	{
+		Console::SetColor( Console::Color::RED );
 		std::cout << "[ERROR] MemoryManager::delete\n";
 		std::cout << "Header check does not match!\n";
 	}
@@ -46,10 +49,13 @@ void operator delete ( void* pMem )
 	Footer* pFooter = (Footer*)( (char*)pMem + pHeader->size );
 	if ( pFooter->check != DEADCODE )
 	{
+		Console::SetColor( Console::Color::RED );
 		std::cout << "[ERROR] MemoryManager::delete\n";
 		std::cout << "Footer check does not match!\n";
 	}
+	Console::SetColor( Console::Color::WHITE );
 #endif
+
 	// Deallocate memory from the heap
 	pHeader->pHeap->DeallocateMemory( pHeader, pHeader->size );
 	free( pHeader );

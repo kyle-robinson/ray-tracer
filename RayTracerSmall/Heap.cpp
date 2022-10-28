@@ -1,4 +1,5 @@
 #include "Heap.h"
+#include "Console.h"
 #include "MemoryManager.h"
 
 void* Heap::operator new ( size_t size )
@@ -44,21 +45,28 @@ void Heap::DeallocateMemory( Header* header, int size )
 
 void Heap::PrintHeapInformation()
 {
+	Console::SetColor( Console::Color::WHITE );
 	std::cout << "Printing heap information...\n\n";
+	
+	Console::SetColor( Console::Color::CYAN );
 	std::cout << "Total Memory:\t" << totalMemoryAllocated << '\n';
 	std::cout << "Peak Memory:\t" << peakMemoryAllocated << '\n';
 
 	if ( pHeader != nullptr )
 	{
-		std::cout << "\n| Address |\t\t\t| Type |\t\t| Size |\n";
+		Console::SetColor( Console::Color::YELLOW );
+		std::cout << "\n________________________________________________\n";
+		std::cout << "| ADDRESS |\t\t| TYPE |\t| SIZE |";
+		std::cout << "\n________________________________________________\n";
 
 		// Iterate through each element in the heap
 		size_t size = sizeof( Header );
 		Header* pCurrentHeader = pHeader;
+		Console::SetColor( Console::Color::WHITE );
 		while ( pCurrentHeader != nullptr )
 		{
 			auto& start = *( pCurrentHeader + size );
-			std::cout << &start << "\t\t" << typeid( start ).name() << "\t\t" << pCurrentHeader->size << '\n';
+			std::cout << &start << "\t" << typeid( start ).name() << "\t" << pCurrentHeader->size << '\n';
 
 			if ( pCurrentHeader->pNext == nullptr )
 				break;
@@ -67,12 +75,13 @@ void Heap::PrintHeapInformation()
 		}
 	}
 
-	std::cout << "\n\n";
+	std::cout << '\n';
 }
 
 void Heap::CheckHeapIntegrity()
 {
 #ifdef _DEBUG
+	Console::SetColor( Console::Color::WHITE );
 	std::cout << "Checking heap integrity...\n\n";
 	
 	int errorCount = 0;
@@ -88,6 +97,7 @@ void Heap::CheckHeapIntegrity()
 			{
 				errorCount++;
 				foundError = true;
+				Console::SetColor( Console::Color::RED );
 				std::cout << "[ERROR] Heap::CheckIntegrity\n";
 				std::cout << "Header check code does not match!\n";
 			}
@@ -99,6 +109,7 @@ void Heap::CheckHeapIntegrity()
 			{
 				errorCount++;
 				foundError = true;
+				Console::SetColor( Console::Color::RED );
 				std::cout << "[ERROR] Heap::CheckIntegrity\n";
 				std::cout << "Footer check code does not match!\n";
 			}
@@ -110,15 +121,18 @@ void Heap::CheckHeapIntegrity()
 	// Print error information
 	if ( foundError )
 	{
+		Console::SetColor( Console::Color::YELLOW );
 		std::cout << "[ERROR] Heap::CheckIntegrity\n";
-		std::cout << "Error count:\t" << errorCount;
+		std::cout << "Error count:\t" << errorCount << '\n';
 	}
 	else
 	{
+		Console::SetColor( Console::Color::GREEN );
 		std::cout << "[INFO] Heap::CheckIntegrity\n";
-		std::cout << "[INFO] No errors found in heap:\t" << heapName;
+		std::cout << "[INFO] No errors found in heap:\t" << heapName << '\n';
 	}
-
-	std::cout << "\n\n---------------------------------\n\n";
+	
+	Console::SetColor( Console::Color::WHITE );
+	std::cout << "\n________________________________________________\n";
 #endif
 }

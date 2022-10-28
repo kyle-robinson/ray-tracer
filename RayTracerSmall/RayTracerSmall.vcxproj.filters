@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MemoryManager.cpp">
+      <Filter>Source\Memory Management</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManager.cpp">
+      <Filter>Source\Memory Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Heap.cpp">
+      <Filter>Source\Memory Management</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Source\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{daf38ddd-86d3-4f88-890f-f50b325e6f9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{7745c745-0962-401e-af47-971e31cf7e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Memory Management">
+      <UniqueIdentifier>{1df013a9-0612-428d-ab70-4c8ff9711a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Memory Management">
+      <UniqueIdentifier>{0b109ef5-3809-4539-8122-0da7ce3ae3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Utility">
+      <UniqueIdentifier>{d4599c3c-a714-4e61-87c0-dd7bbd7f5c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utility">
+      <UniqueIdentifier>{bb02a71c-e5d9-46bd-889d-b9cf6ab22ef0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MemoryManager.h">
+      <Filter>Headers\Memory Management</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapManager.h">
+      <Filter>Headers\Memory Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Heap.h">
+      <Filter>Headers\Memory Management</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Headers\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Headers\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
