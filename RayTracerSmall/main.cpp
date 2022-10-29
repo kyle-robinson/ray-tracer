@@ -362,7 +362,7 @@ int main(int argc, char **argv)
 	// Print time taken to render
 	Console::SetColor( Console::Color::CYAN );
 	float timeElapsed = timer.Mark();
-	std::cout << "[TIME ELAPSED]\t" << timeElapsed << '\n';
+	std::cout << "[TIME ELAPSED]\t" << timeElapsed << " seconds\n";
 
 	// Print heap information
 	Console::SetColor( Console::Color::MAGENTA );
