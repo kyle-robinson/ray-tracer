@@ -277,7 +277,7 @@ void BasicRender()
 	
 	// This creates a file, titled 1.ppm in the current working directory
 	render(spheres, 1);
-
+	std::cout << '\n';
 }
 
 void SimpleShrinking()
@@ -321,6 +321,8 @@ void SimpleShrinking()
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
 	}
+
+	std::cout << '\n';
 }
 
 void SmoothScaling()
@@ -331,16 +333,18 @@ void SmoothScaling()
 	for (float r = 0; r <= 100; r++)
 	{
 		spheres.push_back(Sphere(Vec3f(0.0, -10004, -20), 10000, Vec3f(0.20, 0.20, 0.20), 0, 0.0));
-		spheres.push_back(Sphere(Vec3f(0.0, 0, -20), r / 100, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // Radius++ change here
+		spheres.push_back(Sphere(Vec3f(0.0, 0, -20), r / 50, Vec3f(1.00, 0.32, 0.36), 1, 0.5)); // Radius++ change here
 		spheres.push_back(Sphere(Vec3f(5.0, -1, -15), 2, Vec3f(0.90, 0.76, 0.46), 1, 0.0));
 		spheres.push_back(Sphere(Vec3f(5.0, 0, -25), 3, Vec3f(0.65, 0.77, 0.97), 1, 0.0));
 		render(spheres, r);
 		std::cout << "Rendered and saved spheres" << r << ".ppm" << '\n';
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
-
 	}
+
+	std::cout << '\n';
 }
+
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
 // and 1 light (which is also a sphere). Then, once the scene description is complete
@@ -352,12 +356,12 @@ int main(int argc, char **argv)
 	srand(13);
 
 	Timer timer;
-	Heap* heapChunk = HeapManager::CreateHeap( "HeapChunk" );
-	Heap* heapChar = HeapManager::CreateHeap( "HeapChar" );
+	Heap* heapOne = HeapManager::CreateHeap( "HeapOne" );
+	Heap* heapTwo = HeapManager::CreateHeap( "HeapTwo" );
 
 	//BasicRender();
-	SimpleShrinking();
-	//SmoothScaling();
+	//SimpleShrinking();
+	SmoothScaling();
 
 	// Print time taken to render
 	Console::SetColor( Console::Color::CYAN );
@@ -373,9 +377,8 @@ int main(int argc, char **argv)
 	std::cout << "\nDELETING HEAPS\n\n";
 	HeapManager::DeleteHeaps();
 
-	heapChunk = nullptr;
-	heapChar = nullptr;
+	heapOne = nullptr;
+	heapTwo = nullptr;
 
 	return 0;
 }
-

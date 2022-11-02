@@ -46,9 +46,10 @@ void Heap::DeallocateMemory( Header* header, int size )
 void Heap::PrintHeapInformation()
 {
 	Console::SetColor( Console::Color::WHITE );
-	std::cout << "Printing heap information...\n\n";
+	std::cout << "\nPrinting heap information...\n\n";
 	
 	Console::SetColor( Console::Color::CYAN );
+	std::cout << "Heap Name:\t" << heapName << '\n';
 	std::cout << "Total Memory:\t" << totalMemoryAllocated << '\n';
 	std::cout << "Peak Memory:\t" << peakMemoryAllocated << '\n';
 
