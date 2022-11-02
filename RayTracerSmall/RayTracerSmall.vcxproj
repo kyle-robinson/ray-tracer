@@ -74,6 +74,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -142,19 +144,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Console.cpp" />
-    <ClCompile Include="Heap.cpp" />
-    <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MemoryManager.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Memory\Heap.cpp" />
+    <ClCompile Include="Memory\HeapManager.cpp" />
+    <ClCompile Include="Memory\MemoryManager.cpp" />
+    <ClCompile Include="Utility\Console.cpp" />
+    <ClCompile Include="Utility\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Console.h" />
-    <ClInclude Include="Heap.h" />
-    <ClInclude Include="HeapManager.h" />
-    <ClInclude Include="MemoryManager.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Memory\Heap.h" />
+    <ClInclude Include="Memory\HeapManager.h" />
+    <ClInclude Include="Memory\MemoryManager.h" />
+    <ClInclude Include="Utility\Console.h" />
+    <ClInclude Include="Utility\Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

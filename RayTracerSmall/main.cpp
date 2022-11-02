@@ -185,7 +185,7 @@ Vec3f trace(
 	// positive.
 	nhit.normalize();
 
-	float bias = INFINITY; // add some bias to the point from which we will be tracing
+	float bias = 1e-4; // add some bias to the point from which we will be tracing
 	bool inside = false;
 	if ( raydir.dot( nhit ) > 0.0f ) nhit = -nhit, inside = true;
 	if ( ( sphere->transparency > 0.0f || sphere->reflection > 0.0f ) && depth < MAX_RAY_DEPTH )
@@ -279,7 +279,7 @@ void render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 
 	// Save result to a PPM image (keep these flags if you compile under Windows)
 	std::stringstream ss;
-	ss << "./spheres" << std::to_string( iteration ) << ".ppm";
+	ss << "./Resources/spheres" << std::to_string( iteration ) << ".ppm";
 	std::string tempString = ss.str();
 	char* filename = (char*)tempString.c_str();
 
@@ -315,7 +315,7 @@ void SimpleShrinking()
 	std::vector<Sphere> spheres;
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 
-	for ( uint_fast32_t i = 0U; i < 4U; i++ )
+	for ( uint_fast32_t i = 0U; i < 4U; ++i )
 	{
 		switch ( i )
 		{
@@ -358,7 +358,7 @@ void SmoothScaling()
 	std::vector<Sphere> spheres;
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 
-	for ( uint_fast32_t i = 0U; i <= 100U; i++ )
+	for ( uint_fast32_t i = 0U; i <= 100U; ++i )
 	{
 		spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f), 10000.0f,         Vec3f( 0.20f, 0.20f, 0.20f), 0.0f, 0.0f ) );
 		spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f), (float)i / 50.0f, Vec3f( 1.00f, 0.32f, 0.36f), 1.0f, 0.5f ) ); // Radius++ change here
