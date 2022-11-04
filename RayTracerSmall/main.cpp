@@ -33,6 +33,7 @@
 #include <string.h>
 
 #include "Timer.h"
+#include "Sphere.h"
 #include "Console.h"
 #include "HeapManager.h"
 #include "MemoryManager.h"
@@ -44,88 +45,6 @@
 #define M_PI 3.141592653589793
 #define INFINITY 1e8
 #endif
-
-template<typename T>
-class Vec3
-{
-public:
-	T x, y, z;
-	Vec3() : x( T( 0 ) ), y( T( 0 ) ), z( T( 0 ) ) {}
-	Vec3( T xx ) : x( xx ), y( xx ), z( xx ) {}
-	Vec3( T xx, T yy, T zz ) : x( xx ), y( yy ), z( zz ) {}
-	inline Vec3& normalize()
-	{
-		T nor2 = length2();
-		if ( nor2 > (T)0 )
-		{
-			T invNor = (T)1 / sqrt( nor2 );
-			x *= invNor, y *= invNor, z *= invNor;
-		}
-		return *this;
-	}
-
-	inline Vec3<T> operator - () const noexcept { return Vec3<T>( -x, -y, -z ); }
-	inline Vec3<T> operator * ( const T &f ) const noexcept { return Vec3<T>( x * f, y * f, z * f ); }
-	inline Vec3<T> operator * ( const Vec3<T> &v ) const noexcept { return Vec3<T>( x * v.x, y * v.y, z * v.z ); }
-	inline Vec3<T> operator - ( const Vec3<T> &v ) const noexcept { return Vec3<T>( x - v.x, y - v.y, z - v.z ); }
-	inline Vec3<T> operator + ( const Vec3<T> &v ) const noexcept { return Vec3<T>( x + v.x, y + v.y, z + v.z ); }
-
-	inline Vec3<T>& operator += ( const Vec3<T> &v ) { x += v.x, y += v.y, z += v.z; return *this; }
-	inline Vec3<T>& operator *= ( const Vec3<T> &v ) { x *= v.x, y *= v.y, z *= v.z; return *this; }
-
-	inline T length() const noexcept { return sqrt( length2() ); }
-	inline T length2() const noexcept { return x * x + y * y + z * z; }
-	inline T dot(const Vec3<T> &v) const noexcept { return x * v.x + y * v.y + z * v.z; }
-	inline friend std::ostream & operator << ( std::ostream &os, const Vec3<T> &v )
-	{
-		os << "[" << v.x << " " << v.y << " " << v.z << "]";
-		return os;
-	}
-};
-typedef Vec3<float> Vec3f;
-
-class Sphere
-{
-public:
-	Vec3f center;                           /// position of the sphere
-	float radius, radius2;                  /// sphere radius and radius^2
-	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
-	float transparency, reflection;         /// surface transparency and reflectivity
-	Sphere(
-		const Vec3f &c,
-		const float &r,
-		const Vec3f &sc,
-		const float &refl = 0.0f,
-		const float &transp = 0.0f,
-		const Vec3f &ec = 0 )
-		:
-		center( c ),
-		radius( r ),
-		radius2( r * r ),
-		surfaceColor( sc ),
-		emissionColor( ec ),
-		transparency( transp ),
-		reflection( refl )
-	{}
-	//[comment]
-	// Compute a ray-sphere intersection using the geometric solution
-	//[/comment]
-	inline bool intersect( const Vec3f &rayorig, const Vec3f &raydir, float &t0, float &t1 ) const noexcept
-	{
-		Vec3f l = center - rayorig;
-		float tca = l.dot( raydir );
-		if ( tca < 0.0f ) return false;
-
-		float d2 = l.dot( l ) - tca * tca;
-		if ( d2 > radius2 ) return false;
-
-		float thc = sqrt( radius2 - d2 );
-		t0 = tca - thc;
-		t1 = tca + thc;
-
-		return true;
-	}
-};
 
 //[comment]
 // This variable controls the maximum recursion depth
@@ -269,7 +188,7 @@ void render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 	{
 		for ( float x = 0.0f; x < width; ++x, ++pixel )
 		{
-			float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1 ) * angle * aspectratio;
+			float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
 			float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
 			Vec3f raydir( xx, yy, -1.0f );
 			raydir.normalize();

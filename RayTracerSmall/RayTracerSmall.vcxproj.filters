@@ -54,5 +54,11 @@
     <ClInclude Include="Memory\MemoryManager.h">
       <Filter>Headers\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\Sphere.h">
+      <Filter>Headers\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Vec3.h">
+      <Filter>Headers\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
