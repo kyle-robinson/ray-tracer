@@ -148,6 +148,7 @@
     <ClCompile Include="Memory\Heap.cpp" />
     <ClCompile Include="Memory\HeapManager.cpp" />
     <ClCompile Include="Memory\MemoryManager.cpp" />
+    <ClCompile Include="Memory\ThreadManager.cpp" />
     <ClCompile Include="Utility\Console.cpp" />
     <ClCompile Include="Utility\Timer.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Memory\Heap.h" />
     <ClInclude Include="Memory\HeapManager.h" />
     <ClInclude Include="Memory\MemoryManager.h" />
+    <ClInclude Include="Memory\ThreadManager.h" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Sphere.h" />
     <ClInclude Include="Utility\Timer.h" />

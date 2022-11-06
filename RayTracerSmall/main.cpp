@@ -37,6 +37,9 @@
 #include "Console.h"
 #include "HeapManager.h"
 #include "MemoryManager.h"
+#include "ThreadManager.h"
+
+#define THREAD_COUNT 8
 
 #if defined __linux__ || defined __APPLE__
 // "Compiled for Linux
@@ -174,7 +177,6 @@ void render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 {
 	// Recommended Testing Resolution
 	float width = 640.0f, height = 480.0f;
-
 	// Recommended Production Resolution
 	//float width = 1920.0f, height = 1080.0f;
 
@@ -183,18 +185,48 @@ void render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 	float fov = 30.0f, aspectratio = float( width ) / float( height );
 	float angle = tanf( M_PI * 0.5f * fov / 180.0f );
 
-	// Trace rays
-	for ( float y = 0.0f; y < height; ++y )
+	Vec3f** chunkArrs = new Vec3f * [THREAD_COUNT];
+	char** charArrs = new char* [THREAD_COUNT];
+	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
 	{
-		for ( float x = 0.0f; x < width; ++x, ++pixel )
-		{
-			float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
-			float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
-			Vec3f raydir( xx, yy, -1.0f );
-			raydir.normalize();
-			*pixel = trace( Vec3f( 0.0f ), raydir, spheres, 0U );
-		}
+		chunkArrs[i] = new Vec3f[( ( width * height ) / THREAD_COUNT )];
+		charArrs[i] = new char[( ( width * height ) / THREAD_COUNT ) * 3];
 	}
+
+	// Trace rays
+	int startY = 0;
+	int endY = height / THREAD_COUNT;
+	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
+	{
+		Vec3f* currentChunk = chunkArrs[i];
+		char* currentArr = charArrs[i];
+		ThreadManager::CreateThread( [=, &pixel]
+			{
+				for ( float y = startY; y < endY; ++y )
+				{
+					for ( float x = 0.0f; x < width; ++x, ++pixel )
+					{
+						float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
+						float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
+						Vec3f raydir( xx, yy, -1.0f );
+						raydir.normalize();
+						*pixel = trace( Vec3f( 0.0f ), raydir, spheres, 0U );
+					}
+				}
+
+				int charIndex = 0;
+				for ( uint_fast32_t j = 0u; j < ( width * height ) / THREAD_COUNT; ++j )
+				{
+					currentArr[charIndex] = (unsigned char)( ( 1.0f < currentChunk[j].x ? 1.0f : currentChunk[j].x ) * 255 );
+					currentArr[charIndex + 1] = (unsigned char)( ( 1.0f < currentChunk[j].y ? 1.0f : currentChunk[j].y ) * 255 );
+					currentArr[charIndex + 2] = (unsigned char)( ( 1.0f < currentChunk[j].z ? 1.0f : currentChunk[j].z ) * 255 );
+					charIndex += 3;
+				}
+			});
+		startY += height / THREAD_COUNT;
+		endY += height / THREAD_COUNT;
+	}
+	ThreadManager::WaitForAllThreads();
 
 	// Save result to a PPM image (keep these flags if you compile under Windows)
 	std::stringstream ss;
@@ -204,14 +236,23 @@ void render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 
 	std::ofstream ofs( filename, std::ios::out | std::ios::binary );
 	ofs << "P6\n" << width << " " << height << "\n255\n";
-	for ( uint_fast32_t i = 0; i < width * height; ++i )
+	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
 	{
-		ofs << (uint_fast8_t)( std::min( 1.0f, image[i].x ) * 255 )
-			<< (uint_fast8_t)( std::min( 1.0f, image[i].y ) * 255 )
-			<< (uint_fast8_t)( std::min( 1.0f, image[i].z ) * 255 );
+		ofs.write( charArrs[i], ( ( width * height ) / THREAD_COUNT ) * 3 );
+		delete[] chunkArrs[i];
+		delete[] charArrs[i];
+		charArrs[i] = nullptr;
+		charArrs[i] = nullptr;
 	}
 	ofs.close();
+
+	delete[] chunkArrs;
+	delete[] charArrs;
 	delete[] image;
+
+	image = nullptr;
+	charArrs = nullptr;
+	chunkArrs = nullptr;
 }
 
 void BasicRender()
@@ -301,10 +342,7 @@ int main( int argc, char **argv )
 {
 	// This sample only allows one choice per program execution. Feel free to improve upon this
 	srand( 13 );
-
 	Timer timer;
-	Heap* heapOne = HeapManager::CreateHeap( "HeapOne" );
-	Heap* heapTwo = HeapManager::CreateHeap( "HeapTwo" );
 
 	//BasicRender();
 	//SimpleShrinking();
@@ -323,9 +361,6 @@ int main( int argc, char **argv )
 	Console::SetColor( Console::Color::BLUE );
 	std::cout << "\nDELETING HEAPS\n\n";
 	HeapManager::DeleteHeaps();
-
-	heapOne = nullptr;
-	heapTwo = nullptr;
 
 	return 0;
 }
