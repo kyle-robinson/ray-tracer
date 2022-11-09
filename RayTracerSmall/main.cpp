@@ -26,12 +26,13 @@ int main( int argc, char **argv )
 
 	// Print heap information
 	Console::SetColor( Console::Color::MAGENTA );
-	std::cout << "\n\nHEAP INFORMATION\n\n";
+	std::cout << "\nHEAP INFORMATION\n";
 	HeapManager::CheckAllHeaps();
 
 	Console::SetColor( Console::Color::MAGENTA );
-	std::cout << "\nDELETING HEAPS\n\n";
+	std::cout << "\nDELETING HEAPS\n";
 	HeapManager::DeleteHeaps();
 
+	Console::SetColor( Console::Color::WHITE );
 	return 0;
 }

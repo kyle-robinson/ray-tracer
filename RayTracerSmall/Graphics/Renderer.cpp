@@ -11,14 +11,14 @@ void Renderer::Render_Basic()
 	std::vector<Sphere> spheres;
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
 
-	spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-	spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
-	spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-	spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+	spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+	spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
+	spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+	spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
 
 	// This creates a file, titled 1.ppm in the current working directory
 	Render( spheres, 1U );
-	std::cout << '\n';
+	std::cout << "Rendered and saved spheres0.ppm" << '\n' << '\n';
 }
 
 void Renderer::Render_Shrinking()
@@ -28,35 +28,36 @@ void Renderer::Render_Shrinking()
 
 	for ( uint_fast32_t i = 0U; i < 4U; ++i )
 	{
-		switch (i)
+		switch ( i )
 		{
 		case 0:
-			spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
-			spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
+			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
 			break;
 		case 1:
-			spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 3.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 3.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
+			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
 			break;
 		case 2:
-			spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f), 2.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 2.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
+			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
 			break;
 		case 3:
-			spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 1.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 1.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
+			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
 			break;
 		}
 
 		Render( spheres, i );
+		std::cout << "Rendered and saved spheres" << std::to_string( i ) << ".ppm" << '\n';
 		// Dont forget to clear the Vector holding the spheres.
 		spheres.clear();
 	}
@@ -71,10 +72,11 @@ void Renderer::Render_SmoothScaling()
 
 	for ( uint_fast32_t i = 0U; i <= 100U; ++i )
 	{
-		spheres.push_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f,         Vec3f( 0.20f, 0.20f, 0.20f), 0.0f, 0.0f ) );
-		spheres.push_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), (float)i / 50.0f, Vec3f( 1.00f, 0.32f, 0.36f), 1.0f, 0.5f ) ); // Radius++ change here
-		spheres.push_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,             Vec3f( 0.90f, 0.76f, 0.46f), 1.0f, 0.0f ) );
-		spheres.push_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,             Vec3f( 0.65f, 0.77f, 0.97f), 1.0f, 0.0f ) );
+		spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f,         Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
+		spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), (float)i / 50.0f, Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius++ change here
+		spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,             Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
+		spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,             Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+
 		Render( spheres, i );
 		std::cout << "Rendered and saved spheres" << std::to_string( i ) << ".ppm" << '\n';
 		// Dont forget to clear the Vector holding the spheres.
