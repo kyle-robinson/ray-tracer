@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;$(ProjectDir)Graphics</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -144,6 +144,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\RayTracer.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Memory\Heap.cpp" />
     <ClCompile Include="Memory\HeapManager.cpp" />
@@ -153,6 +155,8 @@
     <ClCompile Include="Utility\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graphics\RayTracer.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Memory\Heap.h" />
     <ClInclude Include="Memory\HeapManager.h" />
     <ClInclude Include="Memory\MemoryManager.h" />

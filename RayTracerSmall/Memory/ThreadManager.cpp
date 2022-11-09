@@ -15,6 +15,7 @@ void ThreadManager::CreateThread( std::function<void()> thread )
 	pid_t newThread = vfork();
 	if ( newThread < 0 )
 	{
+		Console::SetColor( Console::Color::RED );
 		printf( "[ERROR] ThreadManager::CreateThread\n" );
 		printf( "Failed to create fork!\n" );
 	}

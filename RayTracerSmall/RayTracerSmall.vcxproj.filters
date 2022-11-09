@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Utility\Timer.cpp">
       <Filter>Source\Utility</Filter>
     </ClCompile>
@@ -19,6 +18,15 @@
     </ClCompile>
     <ClCompile Include="Memory\ThreadManager.cpp">
       <Filter>Source\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Renderer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\RayTracer.cpp">
+      <Filter>Source\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +47,12 @@
     </Filter>
     <Filter Include="Source\Memory">
       <UniqueIdentifier>{0b109ef5-3809-4539-8122-0da7ce3ae3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Graphics">
+      <UniqueIdentifier>{fec765c4-3a23-4ab7-951d-3b287a91c8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{412b8088-5858-4db9-ac12-6257cfe53b3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="Memory\ThreadManager.h">
       <Filter>Headers\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\RayTracer.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Renderer.h">
+      <Filter>Headers\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

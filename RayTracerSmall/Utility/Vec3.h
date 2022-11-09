@@ -2,6 +2,8 @@
 #ifndef VEC3_H
 #define VEC3_H
 
+#include <fstream>
+
 template<typename T>
 class Vec3
 {
