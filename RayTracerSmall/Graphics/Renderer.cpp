@@ -10,81 +10,88 @@
 #pragma region RENDER_SETUP
 void Renderer::Render_Basic()
 {
-	std::vector<Sphere> spheres;
-	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	// Dynamic array is more efficient than vector
+	Sphere* spheres = new Sphere[4];
 
-	spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-	spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
-	spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-	spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	spheres[0] = Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f );
+	spheres[1] = Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ); // The radius paramter is the value we will change
+	spheres[2] = Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f );
+	spheres[3] = Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f );
 
 	// This creates a file, titled 1.ppm in the current working directory
-	Render( spheres, 1U );
+	Render( spheres, 1u );
 	std::cout << "Rendered and saved spheres0.ppm" << '\n' << '\n';
+
+	delete[] spheres;
+	spheres = nullptr;
 }
 
 void Renderer::Render_Shrinking()
 {
-	std::vector<Sphere> spheres;
-	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	// Dynamic array is more efficient than vector
+	Sphere* spheres = new Sphere[4];
 
-	for ( uint_fast32_t i = 0U; i < 4U; ++i )
+	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	spheres[0] = Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f );
+	spheres[1] = Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ); // The radius paramter is the value we will change
+	spheres[2] = Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f );
+	spheres[3] = Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f );
+
+	for ( uint_fast32_t i = 0u; i < 4u; ++i )
 	{
 		switch ( i )
 		{
 		case 0:
-			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 4.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // The radius paramter is the value we will change
-			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres[1].radius = 4.0f;
+			spheres[1].radius2 = 4.0f * 4.0f;
 			break;
 		case 1:
-			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 3.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres[1].radius = 3.0f;
+			spheres[1].radius2 = 3.0f * 3.0f;
 			break;
 		case 2:
-			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 2.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres[1].radius = 2.0f;
+			spheres[1].radius2 = 2.0f * 2.0f;
 			break;
 		case 3:
-			spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f, Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 1.0f,     Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius--
-			spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-			spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+			spheres[1].radius = 1.0f;
+			spheres[1].radius2 = 1.0f;
 			break;
 		}
 
 		Render( spheres, i );
 		std::cout << "Rendered and saved spheres" << std::to_string( i ) << ".ppm" << '\n';
-		// Dont forget to clear the Vector holding the spheres.
-		spheres.clear();
 	}
 
+	delete[] spheres;
+	spheres = nullptr;
 	std::cout << '\n';
 }
 
 void Renderer::Render_SmoothScaling()
 {
-	std::vector<Sphere> spheres;
+	// Dynamic array is more efficient than vector
+	Sphere* spheres = new Sphere[4];
+	
 	// Vector structure for Sphere (position, radius, surface color, reflectivity, transparency, emission color)
+	spheres[0] = Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f,     Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f );
+	spheres[1] = Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), 0.0f / 50.0f, Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ); // Radius++ change here
+	spheres[2] = Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,         Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f );
+	spheres[3] = Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,         Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f );
 
-	for ( uint_fast32_t i = 0U; i <= 100U; ++i )
+	for ( float r = 0.0f; r <= 100.0f; ++r )
 	{
-		spheres.emplace_back( Sphere( Vec3f( 0.0f, -10004.0f, -20.0f ), 10000.0f,         Vec3f( 0.20f, 0.20f, 0.20f ), 0.0f, 0.0f ) );
-		spheres.emplace_back( Sphere( Vec3f( 0.0f,  0.0f,     -20.0f ), (float)i / 50.0f, Vec3f( 1.00f, 0.32f, 0.36f ), 1.0f, 0.5f ) ); // Radius++ change here
-		spheres.emplace_back( Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,             Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f ) );
-		spheres.emplace_back( Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,             Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f ) );
+		float radius = r / 50.0f;
+		spheres[1].radius = radius;
+		spheres[1].radius2 = radius * radius;
 
-		Render( spheres, i );
-		std::cout << "Rendered and saved spheres" << std::to_string( i ) << ".ppm" << '\n';
-		// Dont forget to clear the Vector holding the spheres.
-		spheres.clear();
+		Render( spheres, r );
+		std::cout << "Rendered and saved spheres" << std::to_string( (uint32_t)r ) << ".ppm" << '\n';
 	}
 
+	delete[] spheres;
+	spheres = nullptr;
 	std::cout << '\n';
 }
 #pragma endregion
@@ -95,7 +102,7 @@ void Renderer::Render_SmoothScaling()
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Renderer::Render( const std::vector<Sphere>& spheres, uint_fast32_t iteration )
+void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 {
 	float invWidth = 1.0f / WIDTH;
 	float invHeight = 1.0f / HEIGHT;

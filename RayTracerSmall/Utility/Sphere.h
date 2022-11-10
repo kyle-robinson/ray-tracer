@@ -11,6 +11,13 @@ public:
 	float radius, radius2; /// sphere radius and radius^2
 	Vec3f surfaceColor, emissionColor; /// surface color and emission (light)
 	float transparency, reflection; /// surface transparency and reflectivity
+	Sphere()
+		:
+		radius( 1.0f ),
+		radius2( 1.0f ),
+		reflection( 1.0f ),
+		transparency( 1.0f )
+	{}
 	Sphere(
 		const Vec3f &c,
 		const float &r,

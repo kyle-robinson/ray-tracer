@@ -13,7 +13,7 @@
 Vec3f RayTracer::Trace(
 	const Vec3f &rayorig,
 	const Vec3f &raydir,
-	const std::vector<Sphere> &spheres,
+	const Sphere* spheres,
 	const uint_fast32_t &depth,
 	const uint_fast32_t& size )
 {

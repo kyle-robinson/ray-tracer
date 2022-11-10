@@ -29,7 +29,7 @@ public:
 	void DeletePools();
 #endif
 private:
-	void Render( const std::vector<Sphere>& spheres, uint_fast32_t iteration );
+	void Render( const Sphere* spheres, uint_fast32_t iteration );
 
 #ifdef MEMORY_POOLS
 	MemoryPool* m_pChunkPool;
