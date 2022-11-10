@@ -18,7 +18,8 @@ public:
 	const Vec3f &rayorig,
 	const Vec3f &raydir,
 	const std::vector<Sphere> &spheres,
-	const uint_fast32_t &depth );
+	const uint_fast32_t &depth,
+	const uint_fast32_t& size );
 private:
 	float Mix( const float &a, const float &b, const float &mix );
 };

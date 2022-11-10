@@ -1,6 +1,6 @@
 #include "Console.h"
 
-#ifndef __linux__
+#ifdef _WIN32
 #include <Windows.h>
 #endif
 

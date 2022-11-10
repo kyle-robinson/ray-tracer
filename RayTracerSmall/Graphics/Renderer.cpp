@@ -1,9 +1,11 @@
 #include "Renderer.h"
 #include "ThreadManager.h"
 
-// Windows only
+#ifdef _WIN32
 #include <sstream>
 #include <string.h>
+#include <ppl.h>
+#endif
 
 #pragma region RENDER_SETUP
 void Renderer::Render_Basic()
@@ -93,16 +95,19 @@ void Renderer::Render_SmoothScaling()
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
+void Renderer::Render( const std::vector<Sphere>& spheres, uint_fast32_t iteration )
 {
-	Vec3f *image = new Vec3f[(size_t)WIDTH * (size_t)HEIGHT];
-	float invWidth = 1.0f / WIDTH, invHeight = 1.0f / HEIGHT;
-	float fov = 30.0f, aspectratio = WIDTH / HEIGHT;
+	float invWidth = 1.0f / WIDTH;
+	float invHeight = 1.0f / HEIGHT;
+
+	float fov = 30.0f;
+	float aspectratio = WIDTH / HEIGHT;
 	float angle = tanf( (float)M_PI * 0.5f * fov / 180.0f );
 
 	Vec3f** chunkArrs = new Vec3f * [THREAD_COUNT];
 	char** charArrs = new char* [THREAD_COUNT];
-	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
+
+	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
 	{
 #ifdef MEMORY_POOLS
 		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
@@ -116,12 +121,25 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 	// Trace rays
 	int startY = 0;
 	int endY = (int)HEIGHT / THREAD_COUNT;
-	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
+	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
 	{
 		Vec3f* currentChunk = chunkArrs[i];
 		char* currentArr = charArrs[i];
-		ThreadManager::CreateThread( [=]
+		ThreadManager::CreateThread( [&, currentChunk, currentArr, startY, endY]() -> void
 		{
+#ifdef _WIN32
+			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
+			{
+				for ( float x = 0.0f; x < WIDTH; ++x )
+				{
+					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
+					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
+					Vec3f raydir( xx, yy, -1.0f );
+					raydir.normalize();
+					currentChunk[(int)WIDTH * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, 4u );
+				}
+			} );
+#else
 			uint_fast32_t index = 0u;
 			for ( float y = (float)startY; y < endY; ++y )
 			{
@@ -131,10 +149,10 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
 					Vec3f raydir( xx, yy, -1.0f );
 					raydir.normalize();
-					currentChunk[index] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0U );
+					currentChunk[index] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, 4u );
 				}
 			}
-
+#endif
 			int charIndex = 0;
 			for ( uint_fast32_t i = 0u; i < ( WIDTH * HEIGHT ) / THREAD_COUNT; ++i )
 			{
@@ -157,7 +175,7 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 
 	std::ofstream ofs( filename, std::ios::out | std::ios::binary );
 	ofs << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
-	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
+	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
 	{
 		ofs.write( charArrs[i], std::streamsize( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
 #ifdef MEMORY_POOLS
@@ -174,9 +192,6 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 
 	delete[] chunkArrs;
 	delete[] charArrs;
-	delete[] image;
-
-	image = nullptr;
 	charArrs = nullptr;
 	chunkArrs = nullptr;
 }

@@ -14,14 +14,15 @@ Vec3f RayTracer::Trace(
 	const Vec3f &rayorig,
 	const Vec3f &raydir,
 	const std::vector<Sphere> &spheres,
-	const uint_fast32_t &depth )
+	const uint_fast32_t &depth,
+	const uint_fast32_t& size )
 {
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	const Sphere* sphere = NULL;
 
 	// find intersection of this ray with the sphere in the scene
-	for ( uint_fast32_t i = 0U; i < (uint_fast32_t)spheres.size(); ++i )
+	for ( uint_fast32_t i = 0u; i < size; ++i )
 	{
 		float t0 = INFINITY, t1 = INFINITY;
 		if ( spheres[i].intersect( rayorig, raydir, t0, t1 ) )
@@ -59,7 +60,7 @@ Vec3f RayTracer::Trace(
 		// compute reflection direction (not need to normalize because all vectors are already normalized)
 		Vec3f refldir = raydir - nhit * 2.0f * raydir.dot( nhit );
 		refldir.normalize();
-		Vec3f reflection = Trace( phit + nhit * bias, refldir, spheres, depth + 1U );
+		Vec3f reflection = Trace( phit + nhit * bias, refldir, spheres, depth + 1u, size );
 		Vec3f refraction = 0.0f;
 
 		// if the sphere is also transparent compute refraction ray (transmission)
@@ -70,7 +71,7 @@ Vec3f RayTracer::Trace(
 			float k = 1.0f - eta * eta * ( 1.0f - cosi * cosi );
 			Vec3f refrdir = raydir * eta + nhit * ( eta *  cosi - sqrt( k ) );
 			refrdir.normalize();
-			refraction = Trace( phit - nhit * bias, refrdir, spheres, depth + 1U );
+			refraction = Trace( phit - nhit * bias, refrdir, spheres, depth + 1u, size );
 		}
 		// the result is a mix of reflection and refraction (if the sphere is transparent)
 		surfaceColor = (
@@ -80,7 +81,7 @@ Vec3f RayTracer::Trace(
 	else
 	{
 		// it's a diffuse object, no need to raytrace any further
-		for ( uint_fast32_t i = 0U; i < (uint_fast32_t)spheres.size(); ++i )
+		for ( uint_fast32_t i = size - 1u; i != 0u; --i )
 		{
 			if ( spheres[i].emissionColor.x > 0.0f )
 			{
@@ -88,7 +89,7 @@ Vec3f RayTracer::Trace(
 				Vec3f transmission = 1.0f;
 				Vec3f lightDirection = spheres[i].center - phit;
 				lightDirection.normalize();
-				for ( uint_fast32_t j = 0U; j < (uint_fast32_t)spheres.size(); ++j )
+				for ( uint_fast32_t j = size - 1u; j != 0u; --j )
 				{
 					if ( i != j )
 					{

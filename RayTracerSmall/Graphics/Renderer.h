@@ -2,18 +2,15 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#ifdef _WIN32
+#define M_PI 3.141592653589793
+#define INFINITY 1e8
+#endif
+
 #define MEMORY_POOLS
 #define THREAD_COUNT 8
 #define WIDTH 640.0f
 #define HEIGHT 480.0f
-
-#if defined __linux__ || defined __APPLE__
-// "Compiled for Linux
-#else
-// Windows doesn't define these values by default, Linux does
-#define M_PI 3.141592653589793
-#define INFINITY 1e8
-#endif
 
 #include <iostream>
 #include "Sphere.h"
@@ -32,7 +29,7 @@ public:
 	void DeletePools();
 #endif
 private:
-	void Render( const std::vector<Sphere> &spheres, uint_fast32_t iteration );
+	void Render( const std::vector<Sphere>& spheres, uint_fast32_t iteration );
 
 #ifdef MEMORY_POOLS
 	MemoryPool* m_pChunkPool;
