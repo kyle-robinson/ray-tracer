@@ -95,18 +95,18 @@ void Renderer::Render_SmoothScaling()
 //[/comment]
 void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iteration )
 {
-	Vec3f *image = new Vec3f[WIDTH * HEIGHT], *pixel = image;
+	Vec3f *image = new Vec3f[(size_t)WIDTH * (size_t)HEIGHT];
 	float invWidth = 1.0f / WIDTH, invHeight = 1.0f / HEIGHT;
 	float fov = 30.0f, aspectratio = WIDTH / HEIGHT;
-	float angle = tanf( M_PI * 0.5f * fov / 180.0f );
+	float angle = tanf( (float)M_PI * 0.5f * fov / 180.0f );
 
 	Vec3f** chunkArrs = new Vec3f * [THREAD_COUNT];
 	char** charArrs = new char* [THREAD_COUNT];
 	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
 	{
 #ifdef MEMORY_POOLS
-		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) );
-		charArrs[i] = (char*)m_pCharPool->Allocate( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 );
+		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+		charArrs[i] = (char*)m_pCharPool->Allocate( uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3u ) );
 #else
 		chunkArrs[i] = new Vec3f[( ( WIDTH * HEIGHT ) / THREAD_COUNT )];
 		charArrs[i] = new char[( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3];
@@ -115,49 +115,37 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 
 	// Trace rays
 	int startY = 0;
-	int endY = HEIGHT / THREAD_COUNT;
+	int endY = (int)HEIGHT / THREAD_COUNT;
 	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
 	{
 		Vec3f* currentChunk = chunkArrs[i];
 		char* currentArr = charArrs[i];
-		ThreadManager::CreateThread( [=, &pixel]
+		ThreadManager::CreateThread( [=]
 		{
-#ifdef MEMORY_POOLS
-			int index = 0;
-#endif
-			for ( float y = startY; y < endY; ++y )
+			uint_fast32_t index = 0u;
+			for ( float y = (float)startY; y < endY; ++y )
 			{
-#ifdef MEMORY_POOLS
 				for ( float x = 0.0f; x < WIDTH; ++x, index++ )
-#else
-				for ( float x = 0.0f; x < WIDTH; ++x, ++pixel )
-#endif
 				{
 					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
 					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
 					Vec3f raydir( xx, yy, -1.0f );
 					raydir.normalize();
-#ifdef MEMORY_POOLS
 					currentChunk[index] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0U );
-#else
-					*pixel = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0U );
-#endif
 				}
 			}
 
-#ifdef MEMORY_POOLS
 			int charIndex = 0;
 			for ( uint_fast32_t i = 0u; i < ( WIDTH * HEIGHT ) / THREAD_COUNT; ++i )
 			{
-				currentArr[charIndex] = (unsigned char)( ( 1.0f < currentChunk[i].x ? 1.0f : currentChunk[i].x ) * 255 );
-				currentArr[charIndex + 1] = (unsigned char)( ( 1.0f < currentChunk[i].y ? 1.0f : currentChunk[i].y ) * 255 );
-				currentArr[charIndex + 2] = (unsigned char)( ( 1.0f < currentChunk[i].z ? 1.0f : currentChunk[i].z ) * 255 );
+				currentArr[charIndex] = (uint_fast8_t)( ( 1.0f < currentChunk[i].x ? 1.0f : currentChunk[i].x ) * 255 );
+				currentArr[charIndex + 1] = (uint_fast8_t)( ( 1.0f < currentChunk[i].y ? 1.0f : currentChunk[i].y ) * 255 );
+				currentArr[charIndex + 2] = (uint_fast8_t)( ( 1.0f < currentChunk[i].z ? 1.0f : currentChunk[i].z ) * 255 );
 				charIndex += 3;
 			}
-#endif
-		});
-		startY += HEIGHT / THREAD_COUNT;
-		endY += HEIGHT / THREAD_COUNT;
+		} );
+		startY += (int)HEIGHT / THREAD_COUNT;
+		endY += (int)HEIGHT / THREAD_COUNT;
 	}
 	ThreadManager::WaitForAllThreads();
 
@@ -171,7 +159,7 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 	ofs << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
 	for ( uint_fast32_t i = 0U; i < THREAD_COUNT; i++ )
 	{
-		ofs.write( charArrs[i], ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 );
+		ofs.write( charArrs[i], std::streamsize( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
 #ifdef MEMORY_POOLS
 		m_pChunkPool->Free( chunkArrs[i] );
 		m_pCharPool->Free( charArrs[i] );
@@ -197,8 +185,8 @@ void Renderer::Render( const std::vector<Sphere> &spheres, uint_fast32_t iterati
 #ifdef MEMORY_POOLS
 void Renderer::CreatePools( Heap* pChunkHeap, Heap* pCharHeap )
 {
-	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) );
-	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 );
+	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
 }
 
 void Renderer::DeletePools()
