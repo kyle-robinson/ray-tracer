@@ -31,6 +31,12 @@
     <ClCompile Include="Memory\MemoryPool.cpp">
       <Filter>Source\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="FileIO\JsonLoader.cpp">
+      <Filter>Source\FileIO</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIO\JsonData.cpp">
+      <Filter>Source\FileIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -56,6 +62,15 @@
     </Filter>
     <Filter Include="Source\Graphics">
       <UniqueIdentifier>{412b8088-5858-4db9-ac12-6257cfe53b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\FileIO">
+      <UniqueIdentifier>{727feb96-a022-4317-b44b-e53b21c9b8f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\FileIO">
+      <UniqueIdentifier>{25a7fdd5-f7df-45cf-9630-737a7faecf6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b2a5ae2c-2194-442e-bb86-c6a6ca12b757}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,5 +107,19 @@
     <ClInclude Include="Memory\MemoryPool.h">
       <Filter>Headers\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="FileIO\JsonData.h">
+      <Filter>Headers\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIO\JsonLoader.h">
+      <Filter>Headers\FileIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\json.hpp">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scene.json">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

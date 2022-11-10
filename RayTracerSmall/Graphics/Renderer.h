@@ -15,6 +15,7 @@
 #include <iostream>
 #include "Sphere.h"
 #include "RayTracer.h"
+#include "JsonLoader.h"
 #include "MemoryPool.h"
 
 class Renderer
@@ -23,13 +24,14 @@ public:
 	void Render_Basic();
 	void Render_Shrinking();
 	void Render_SmoothScaling();
+	void Render_JsonFile( const char* filepath );
 
 #ifdef MEMORY_POOLS
 	void CreatePools( Heap* pChunkHeap, Heap* pCharHeap );
 	void DeletePools();
 #endif
 private:
-	void Render( const Sphere* spheres, unsigned iteration );
+	void Render( const Sphere* spheres, unsigned iteration, unsigned sphereCount = 4u );
 
 #ifdef MEMORY_POOLS
 	MemoryPool* m_pChunkPool;

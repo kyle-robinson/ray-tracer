@@ -75,14 +75,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;$(ProjectDir)Graphics</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;$(ProjectDir)FileIO;$(ProjectDir)Resources;$(ProjectDir)Graphics</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;$(ProjectDir)Graphics</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)Utility;$(ProjectDir)Memory;$(ProjectDir)FileIO;$(ProjectDir)Resources;$(ProjectDir)Graphics</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -148,6 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileIO\JsonData.cpp" />
+    <ClCompile Include="FileIO\JsonLoader.cpp" />
     <ClCompile Include="Graphics\RayTracer.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,6 +162,8 @@
     <ClCompile Include="Utility\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileIO\JsonData.h" />
+    <ClInclude Include="FileIO\JsonLoader.h" />
     <ClInclude Include="Graphics\RayTracer.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Memory\Heap.h" />
@@ -167,10 +171,14 @@
     <ClInclude Include="Memory\MemoryManager.h" />
     <ClInclude Include="Memory\MemoryPool.h" />
     <ClInclude Include="Memory\ThreadManager.h" />
+    <ClInclude Include="Resources\json.hpp" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Sphere.h" />
     <ClInclude Include="Utility\Timer.h" />
     <ClInclude Include="Utility\Vec3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

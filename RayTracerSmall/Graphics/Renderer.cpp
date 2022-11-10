@@ -94,6 +94,25 @@ void Renderer::Render_SmoothScaling()
 	spheres = nullptr;
 	std::cout << '\n';
 }
+
+void Renderer::Render_JsonFile( const char* filepath )
+{
+	JsonData jsonData = *JsonLoader::LoadSphereInfoFromFile( filepath );
+	for ( unsigned i = 0u; i < jsonData.frameCount; ++i )
+	{
+		for ( unsigned j = 0u; j < jsonData.sphereCount; ++j )
+		{
+			// Change sphere position and color
+			jsonData.sphereArr[j].center += jsonData.sphereMovementsPerFrame[j];
+			jsonData.sphereArr[j].surfaceColor += jsonData.sphereColorPerFrame[j];
+		}
+
+		Render( jsonData.sphereArr, i, jsonData.sphereCount );
+		std::cout << "Rendered and saved spheres" << i << ".ppm" << '\n';
+	}
+	jsonData.Cleanup();
+	std::cout << '\n';
+}
 #pragma endregion
 
 #pragma region RENDER_MAIN
@@ -102,7 +121,7 @@ void Renderer::Render_SmoothScaling()
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Renderer::Render( const Sphere* spheres, unsigned iteration )
+void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned sphereCount )
 {
 	float invWidth = 1.0f / WIDTH;
 	float invHeight = 1.0f / HEIGHT;
@@ -134,7 +153,7 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration )
 		char* currentArr = charArrs[i];
 		ThreadManager::CreateThread( [&, currentChunk, currentArr, startY, endY]() -> void
 		{
-#ifndef _WIN32
+#ifdef _WIN32
 			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
 			{
 				for ( float x = 0.0f; x < WIDTH; ++x )
@@ -143,7 +162,7 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration )
 					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
 					Vec3f raydir( xx, yy, -1.0f );
 					raydir.normalize();
-					currentChunk[(int)WIDTH * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, 4u );
+					currentChunk[(int)WIDTH * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, sphereCount );
 				}
 			} );
 #else
@@ -176,7 +195,7 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration )
 
 	// Save result to a PPM image (keep these flags if you compile under Windows)
 	std::stringstream ss;
-	ss << "./Resources/spheres" << std::to_string( iteration ) << ".ppm";
+	ss << "./Resources/Spheres/spheres" << std::to_string( iteration ) << ".ppm";
 	std::string tempString = ss.str();
 	char* filename = (char*)tempString.c_str();
 

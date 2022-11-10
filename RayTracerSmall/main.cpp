@@ -23,7 +23,8 @@ int main( int argc, char **argv )
 	Timer timer;
 	//renderer.Render_Basic();
 	//renderer.Render_Shrinking();
-	renderer.Render_SmoothScaling();
+	//renderer.Render_SmoothScaling();
+	renderer.Render_JsonFile( "Resources/scene.json" );
 	float timeElapsed = timer.Mark();
 
 	// Print time taken to render
