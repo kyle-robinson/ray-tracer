@@ -7,9 +7,9 @@
 class MemoryPool
 {
 public:
-	MemoryPool( Heap* heap, uint32_t noOfChunks, uint32_t sizeOfChunks );
+	MemoryPool( Heap* heap, unsigned noOfChunks, unsigned sizeOfChunks );
 	~MemoryPool();
-	void* Allocate( uint32_t requestedBytes );
+	void* Allocate( unsigned requestedBytes );
 	void Free( void* pValue );
 private:
 	// Doubly linked list
@@ -24,8 +24,8 @@ private:
 	Node* m_pFreeMemBlock = nullptr;
 
 	void* m_pMemBlock = nullptr; // Start of pool
-	uint32_t m_lBlockSize; // Size of 1 memory block
-	uint32_t m_lPoolSize; // Total size of pool
+	unsigned m_lBlockSize; // Size of 1 memory block
+	unsigned m_lPoolSize; // Total size of pool
 };
 
 #endif

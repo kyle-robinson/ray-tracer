@@ -10,10 +10,6 @@
 //[/comment]
 int main( int argc, char **argv )
 {
-	// This sample only allows one choice per program execution. Feel free to improve upon this
-	srand( 13 );
-	Timer timer;
-
 #ifdef MEMORY_POOLS
 	Heap* pChunkHeap = HeapManager::CreateHeap( "Chunk Heap" );
 	Heap* pCharHeap = HeapManager::CreateHeap( "Char Heap" );
@@ -24,13 +20,14 @@ int main( int argc, char **argv )
 	renderer.CreatePools( pChunkHeap, pCharHeap );
 #endif
 
+	Timer timer;
 	//renderer.Render_Basic();
 	//renderer.Render_Shrinking();
 	renderer.Render_SmoothScaling();
+	float timeElapsed = timer.Mark();
 
 	// Print time taken to render
 	Console::SetColor( Console::Color::CYAN );
-	float timeElapsed = timer.Mark();
 	std::cout << "[TIME ELAPSED]\t" << timeElapsed << " seconds\n";
 
 #ifdef MEMORY_POOLS

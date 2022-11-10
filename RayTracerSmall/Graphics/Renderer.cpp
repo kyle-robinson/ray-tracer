@@ -38,7 +38,7 @@ void Renderer::Render_Shrinking()
 	spheres[2] = Sphere( Vec3f( 5.0f, -1.0f,     -15.0f ), 2.0f,     Vec3f( 0.90f, 0.76f, 0.46f ), 1.0f, 0.0f );
 	spheres[3] = Sphere( Vec3f( 5.0f,  0.0f,     -25.0f ), 3.0f,     Vec3f( 0.65f, 0.77f, 0.97f ), 1.0f, 0.0f );
 
-	for ( uint_fast32_t i = 0u; i < 4u; ++i )
+	for ( unsigned i = 0u; i < 4u; ++i )
 	{
 		switch ( i )
 		{
@@ -87,7 +87,7 @@ void Renderer::Render_SmoothScaling()
 		spheres[1].radius2 = radius * radius;
 
 		Render( spheres, r );
-		std::cout << "Rendered and saved spheres" << std::to_string( (uint32_t)r ) << ".ppm" << '\n';
+		std::cout << "Rendered and saved spheres" << std::to_string( (unsigned)r ) << ".ppm" << '\n';
 	}
 
 	delete[] spheres;
@@ -102,7 +102,7 @@ void Renderer::Render_SmoothScaling()
 // trace it and return a color. If the ray hits a sphere, we return the color of the
 // sphere at the intersection point, else we return the background color.
 //[/comment]
-void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
+void Renderer::Render( const Sphere* spheres, unsigned iteration )
 {
 	float invWidth = 1.0f / WIDTH;
 	float invHeight = 1.0f / HEIGHT;
@@ -114,11 +114,11 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 	Vec3f** chunkArrs = new Vec3f * [THREAD_COUNT];
 	char** charArrs = new char* [THREAD_COUNT];
 
-	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
+	for ( unsigned i = 0u; i < THREAD_COUNT; i++ )
 	{
 #ifdef MEMORY_POOLS
-		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
-		charArrs[i] = (char*)m_pCharPool->Allocate( uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3u ) );
+		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+		charArrs[i] = (char*)m_pCharPool->Allocate( unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3u ) );
 #else
 		chunkArrs[i] = new Vec3f[( ( WIDTH * HEIGHT ) / THREAD_COUNT )];
 		charArrs[i] = new char[( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3];
@@ -128,13 +128,13 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 	// Trace rays
 	int startY = 0;
 	int endY = (int)HEIGHT / THREAD_COUNT;
-	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
+	for ( unsigned i = 0; i < THREAD_COUNT; ++i )
 	{
 		Vec3f* currentChunk = chunkArrs[i];
 		char* currentArr = charArrs[i];
 		ThreadManager::CreateThread( [&, currentChunk, currentArr, startY, endY]() -> void
 		{
-#ifdef _WIN32
+#ifndef _WIN32
 			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
 			{
 				for ( float x = 0.0f; x < WIDTH; ++x )
@@ -147,7 +147,7 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 				}
 			} );
 #else
-			uint_fast32_t index = 0u;
+			unsigned index = 0u;
 			for ( float y = (float)startY; y < endY; ++y )
 			{
 				for ( float x = 0.0f; x < WIDTH; ++x, index++ )
@@ -161,11 +161,11 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 			}
 #endif
 			int charIndex = 0;
-			for ( uint_fast32_t i = 0u; i < ( WIDTH * HEIGHT ) / THREAD_COUNT; ++i )
+			for ( unsigned i = 0u; i < ( WIDTH * HEIGHT ) / THREAD_COUNT; ++i )
 			{
-				currentArr[charIndex] = (uint_fast8_t)( ( 1.0f < currentChunk[i].x ? 1.0f : currentChunk[i].x ) * 255 );
-				currentArr[charIndex + 1] = (uint_fast8_t)( ( 1.0f < currentChunk[i].y ? 1.0f : currentChunk[i].y ) * 255 );
-				currentArr[charIndex + 2] = (uint_fast8_t)( ( 1.0f < currentChunk[i].z ? 1.0f : currentChunk[i].z ) * 255 );
+				currentArr[charIndex] = (unsigned char)( ( 1.0f < currentChunk[i].x ? 1.0f : currentChunk[i].x ) * 255 );
+				currentArr[charIndex + 1] = (unsigned char)( ( 1.0f < currentChunk[i].y ? 1.0f : currentChunk[i].y ) * 255 );
+				currentArr[charIndex + 2] = (unsigned char)( ( 1.0f < currentChunk[i].z ? 1.0f : currentChunk[i].z ) * 255 );
 				charIndex += 3;
 			}
 		} );
@@ -182,7 +182,7 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 
 	std::ofstream ofs( filename, std::ios::out | std::ios::binary );
 	ofs << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
-	for ( uint_fast32_t i = 0u; i < THREAD_COUNT; i++ )
+	for ( unsigned i = 0u; i < THREAD_COUNT; i++ )
 	{
 		ofs.write( charArrs[i], std::streamsize( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
 #ifdef MEMORY_POOLS
@@ -207,8 +207,8 @@ void Renderer::Render( const Sphere* spheres, uint_fast32_t iteration )
 #ifdef MEMORY_POOLS
 void Renderer::CreatePools( Heap* pChunkHeap, Heap* pCharHeap )
 {
-	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
-	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, uint32_t( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
+	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
 }
 
 void Renderer::DeletePools()

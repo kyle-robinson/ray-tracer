@@ -15,11 +15,11 @@ class RayTracer
 {
 public:
 	Vec3f Trace(
-	const Vec3f &rayorig,
-	const Vec3f &raydir,
+	const Vec3f& rayorig,
+	const Vec3f& raydir,
 	const Sphere* spheres,
-	const uint_fast32_t &depth,
-	const uint_fast32_t& size );
+	const unsigned& depth,
+	const unsigned& size );
 private:
 	float Mix( const float &a, const float &b, const float &mix );
 };

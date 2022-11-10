@@ -1,6 +1,6 @@
 #include "MemoryPool.h"
 
-MemoryPool::MemoryPool( Heap* heap, uint32_t noOfChunks, uint32_t sizeOfChunks ) :
+MemoryPool::MemoryPool( Heap* heap, unsigned noOfChunks, unsigned sizeOfChunks ) :
 	m_lPoolSize( noOfChunks* ( sizeOfChunks + sizeof( Node ) ) ),
 	m_lBlockSize( sizeOfChunks )
 {
@@ -16,7 +16,7 @@ MemoryPool::MemoryPool( Heap* heap, uint32_t noOfChunks, uint32_t sizeOfChunks )
 
 	if ( m_pMemBlock )
 	{
-		for ( uint32_t i = 0u; i < noOfChunks; i++ )
+		for ( unsigned i = 0u; i < noOfChunks; i++ )
 		{
 			// Linked list of memory blocks
 			Node* pCurrentNode = (Node*)( (char*)m_pMemBlock + i * ( sizeOfChunks + sizeof( Node ) ) );
@@ -44,7 +44,7 @@ MemoryPool::~MemoryPool()
 }
 
 // Allocate memory if memory pool cannot any
-void* MemoryPool::Allocate( uint32_t requestedBytes )
+void* MemoryPool::Allocate( unsigned requestedBytes )
 {
 	Node* pCurUnit = m_pFreeMemBlock;
 

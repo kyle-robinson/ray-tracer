@@ -11,18 +11,18 @@
 // the background color.
 //[/comment]
 Vec3f RayTracer::Trace(
-	const Vec3f &rayorig,
-	const Vec3f &raydir,
+	const Vec3f& rayorig,
+	const Vec3f& raydir,
 	const Sphere* spheres,
-	const uint_fast32_t &depth,
-	const uint_fast32_t& size )
+	const unsigned& depth,
+	const unsigned& size )
 {
 	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	const Sphere* sphere = NULL;
 
 	// find intersection of this ray with the sphere in the scene
-	for ( uint_fast32_t i = 0u; i < size; ++i )
+	for ( unsigned i = 0u; i < size; ++i )
 	{
 		float t0 = INFINITY, t1 = INFINITY;
 		if ( spheres[i].intersect( rayorig, raydir, t0, t1 ) )
@@ -81,7 +81,7 @@ Vec3f RayTracer::Trace(
 	else
 	{
 		// it's a diffuse object, no need to raytrace any further
-		for ( uint_fast32_t i = size - 1u; i != 0u; --i )
+		for ( unsigned i = size - 1u; i != 0u; --i )
 		{
 			if ( spheres[i].emissionColor.x > 0.0f )
 			{
@@ -89,7 +89,7 @@ Vec3f RayTracer::Trace(
 				Vec3f transmission = 1.0f;
 				Vec3f lightDirection = spheres[i].center - phit;
 				lightDirection.normalize();
-				for ( uint_fast32_t j = size - 1u; j != 0u; --j )
+				for ( unsigned j = size - 1u; j != 0u; --j )
 				{
 					if ( i != j )
 					{
