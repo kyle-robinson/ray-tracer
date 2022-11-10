@@ -28,6 +28,9 @@
     <ClCompile Include="Graphics\RayTracer.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Memory\MemoryPool.cpp">
+      <Filter>Source\Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Graphics\Renderer.h">
       <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryPool.h">
+      <Filter>Headers\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
