@@ -20,14 +20,28 @@ int main( int argc, char **argv )
 	renderer.CreatePools( pChunkHeap, pCharHeap );
 #endif
 
+	// Get user input
+	std::cout << "Please select a render function. [1-4]\n";
+	std::cout << " 1.\tBasic Render.\n";
+	std::cout << " 2.\tShrinking Render.\n";
+	std::cout << " 3.\tSmooth Scale Render.\n";
+	std::cout << " 4.\tJson File Render.\n";
+
+	char userInput;
+	std::cin.get( userInput );
+	std::system( "cls" );
+
 	Timer timer;
-	//renderer.Render_Basic();
-	//renderer.Render_Shrinking();
-	//renderer.Render_SmoothScaling();
-	renderer.Render_JsonFile( "Resources/scene.json" );
-	float timeElapsed = timer.Mark();
+	switch ( userInput )
+	{
+	case '1': renderer.Render_Basic(); break;
+	case '2': renderer.Render_Shrinking(); break;
+	case '3': renderer.Render_SmoothScaling(); break;
+	case '4': renderer.Render_JsonFile( "Resources/scene.json" ); break;
+	}
 
 	// Print time taken to render
+	float timeElapsed = timer.Mark();
 	Console::SetColor( Console::Color::CYAN );
 	std::cout << "[TIME ELAPSED]\t" << timeElapsed << " seconds\n";
 
