@@ -68,7 +68,7 @@ int main( int argc, char **argv )
 	case '1': renderer.Render_Basic(); break;
 	case '2': renderer.Render_Shrinking(); break;
 	case '3': renderer.Render_SmoothScaling(); break;
-	case '4': renderer.Render_JsonFile( "Resources/scene.json" ); break;
+	case '4': renderer.Render_JsonFile( "Resources/scene3.json" ); break;
 	}
 
 	// Print time taken to render

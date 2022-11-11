@@ -118,7 +118,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\scene.json">
+    <None Include="Resources\scene1.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\scene2.json">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\scene3.json">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>

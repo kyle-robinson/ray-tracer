@@ -180,7 +180,9 @@
     <ClInclude Include="Utility\Vec3.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\scene.json" />
+    <None Include="Resources\scene1.json" />
+    <None Include="Resources\scene2.json" />
+    <None Include="Resources\scene3.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
