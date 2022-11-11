@@ -97,7 +97,7 @@ void Renderer::Render_SmoothScaling()
 
 void Renderer::Render_JsonFile( const char* filepath )
 {
-	JsonData jsonData = *JsonLoader::LoadSphereInfoFromFile( filepath );
+	JsonData jsonData = *JsonLoader::LoadSphereInfo( filepath );
 	for ( unsigned i = 0u; i < jsonData.frameCount; ++i )
 	{
 		for ( unsigned j = 0u; j < jsonData.sphereCount; ++j )

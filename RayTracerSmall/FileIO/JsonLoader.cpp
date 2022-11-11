@@ -1,7 +1,7 @@
 #include "JsonLoader.h"
 #include "Console.h"
 
-JsonData* JsonLoader::LoadSphereInfoFromFile( const char* filepath )
+JsonData* JsonLoader::LoadSphereInfo( const char* filepath )
 {
 	Console::SetColor( Console::Color::RED );
 	std::fstream file( filepath );
@@ -16,12 +16,19 @@ JsonData* JsonLoader::LoadSphereInfoFromFile( const char* filepath )
 	if ( HasAttribute( &jsonFile, "frameCount" ) )
 		noFrames = jsonFile["frameCount"];
 	else
-		std::cout << "[ERROR: JSONReader.cpp: file does not specify number of frames. Use attribute \"frameCount\" to specify" << '\n';
+	{
+		std::cout << "[ERROR] JsonLoader::LoadSphereInfo\n";
+		std::cout << "Json file does not specify the number of frames!\n";
+
+	}
 
 	if ( HasAttribute( &jsonFile, "sphereCount" ) )
 		noSpheres = jsonFile["sphereCount"];
 	else
-		std::cout << "[ERROR: JSONReader.cpp: file does not specify number of spheres. Use attribute \"sphereCount\" to specify" << '\n';
+	{
+		std::cout << "[ERROR] JsonLoader::LoadSphereInfo\n"; 
+		std::cout << "Json file does not specify number of spheres!\n";
+	}
 
 	// Object to get json data
 	JsonData* animInfo = new JsonData( noSpheres, noFrames );

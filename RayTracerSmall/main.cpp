@@ -26,10 +26,10 @@ int main( int argc, char **argv )
 	{
 		// Get user input
 		std::cout << "Please select a render function. [1-4]\n";
-		std::cout << " 1.\tBasic Render.\n";
-		std::cout << " 2.\tShrinking Render.\n";
-		std::cout << " 3.\tSmooth Scale Render.\n";
-		std::cout << " 4.\tJson File Render.\n\n";
+		std::cout << " 1. Basic Render.\n";
+		std::cout << " 2. Shrinking Render.\n";
+		std::cout << " 3. Smooth Scale Render.\n";
+		std::cout << " 4. Json File Render.\n\n";
 
 		std::cin.get( userInput );
 		if ( userInput == '1' ||
@@ -40,6 +40,7 @@ int main( int argc, char **argv )
 		std::system( "cls" );
 	} while ( shouldContinue == false );
 
+	// Select render function
 	Timer timer;
 	switch ( userInput )
 	{
