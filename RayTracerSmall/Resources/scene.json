@@ -1,86 +1,86 @@
 {
-  "frameCount": 500,
+  "frameCount": 250,
   "sphereCount": 8,
   "spheres": [
     {
-      "startPos": [ -30.0, 7.5, -50.0 ],
-      "endPos": [ 15.0, 10.0, -50.0 ],
-      "radius": 5.0,
-      "surfaceColor": [ 1.0, 0.32, 0.36 ],
-      "reflection": 0.2,
+      "startPos": [ 0.0, 0, -87.5 ],
+      "endPos": [ 7.5, 10.0, -75.0 ],
+      "radius": 3.0,
+      "surfaceColor": [ 1.0, 0.2, 0.1 ],
+      "reflection": 1.0,
       "transparency": 0.4,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor":  [ 1.0, 1.0, 0.36 ]
+      "endSurfaceColor":  [ 0.8, 0.4, 0.3 ]
     },
     {
-      "startPos": [ 15.0, 7.5,-50.0 ],
-      "endPos": [ 30.0, 10.0, -100.0 ],
-      "radius": 3.0,
-      "surfaceColor": [ 0.23, 0.45, 0.78 ],
-      "reflection": 0.7,
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ 20.0, 10.0, -100.0 ],
+      "radius": 4.0,
+      "surfaceColor": [ 1.0, 0.6, 0.0 ],
+      "reflection": 0.9,
       "transparency": 0.3,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.23, 0.45, 1.0 ]
+      "endSurfaceColor": [ 0.8, 0.8, 0.2 ]
     },
     {
-      "startPos": [ 30.0, 10.0, -100.0 ],
-      "endPos": [ -15.0, 10.0, -100.0 ],
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ -2.5, 10.0, -100.0 ],
       "radius": 3.0,
-      "surfaceColor": [ 0.6, 0.32, 0.78 ],
-      "reflection": 0.6,
+      "surfaceColor": [ 1.0, 0.9, 0.0 ],
+      "reflection": 0.8,
       "transparency": 1.0,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.6, 0.43, 1.0 ]
+      "endSurfaceColor": [ 0.8, 0.9, 0.2 ]
     },
     {
-      "startPos": [ -15.0, 10.0, -100.0 ],
-      "endPos": [ -30.0, 7.5, -50.0 ],
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ -15.0, 7.5, -75.0 ],
       "radius": 2.0,
-      "surfaceColor": [ 1.0, 0.23, 0.45 ],
-      "reflection": 0.2,
+      "surfaceColor": [ 0.4, 0.9, 0.1 ],
+      "reflection": 1.0,
       "transparency": 0.7,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.45, 0.54 ]
+      "endSurfaceColor": [ 0.6, 0.9, 0.3 ]
     },
     {
-      "startPos": [ -30.0, -10.0, -50.0 ],
-      "endPos": [ 15.0, -10.0, -50.0 ],
-      "radius": 2.0,
-      "surfaceColor": [ 0.0, 0.34, 0.56 ],
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ 7.5, -10.0, -75.0 ],
+      "radius": 3.0,
+      "surfaceColor": [ 0.0, 0.8, 0.1 ],
       "reflection": 1.0,
       "transparency": 0.8,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.57, 0.43 ]
+      "endSurfaceColor": [ 0.2, 1.0, 0.3 ]
     },
     {
-      "startPos": [ 15.0, -10.0, -50.0 ],
-      "endPos": [ 30.0, -7.5, -100.0 ],
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ 20.0, -7.5, -100.0 ],
+      "radius": 4.0,
+      "surfaceColor": [ 0.8, 0.2, 0.8 ],
+      "reflection": 0.9,
+      "transparency": 0.8,
+      "emmisionColor": [ 0.0, 0.0, 0.0 ],
+      "endSurfaceColor": [ 1.0, 0.4, 1.0 ]
+    },
+    {
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ -2.5, -7.5, -100.0 ],
+      "radius": 3.0,
+      "surfaceColor": [ 0.9, 0.5, 0.9 ],
+      "reflection": 0.8,
+      "transparency": 0.8,
+      "emmisionColor": [ 0.0, 0.0, 0.0 ],
+      "endSurfaceColor": [ 0.9, 0.7, 0.9 ]
+    },
+    {
+      "startPos": [ 0.0, 0.0, -87.5 ],
+      "endPos": [ -15.0, -10.0, -75.0 ],
       "radius": 2.0,
-      "surfaceColor": [ 0.0, 0.34, 0.56 ],
+      "surfaceColor": [ 0.8, 0.6, 0.4 ],
       "reflection": 1.0,
       "transparency": 0.8,
       "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.57, 0.43 ]
-    },
-    {
-      "startPos": [ 30.0, -7.5, -100.0 ],
-      "endPos": [ -15.0, -7.5, -100.0 ],
-      "radius": 2.0,
-      "surfaceColor": [ 0.0, 0.34, 0.56 ],
-      "reflection": 1.0,
-      "transparency": 0.8,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.57, 0.43 ]
-    },
-    {
-      "startPos": [ -15.0, -7.5, -100.0 ],
-      "endPos": [ -30.0, -10.0, -50.0 ],
-      "radius": 2.0,
-      "surfaceColor": [ 0.0, 0.34, 0.56 ],
-      "reflection": 1.0,
-      "transparency": 0.8,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.57, 0.43 ]
+      "endSurfaceColor": [ 1.0, 0.8, 0.6 ]
     }
   ],
   "version": "1.0"

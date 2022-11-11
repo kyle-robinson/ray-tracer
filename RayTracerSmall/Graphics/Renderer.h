@@ -9,8 +9,6 @@
 
 #define MEMORY_POOLS
 #define THREAD_COUNT 8
-#define WIDTH 640.0f
-#define HEIGHT 480.0f
 
 #include <iostream>
 #include "Sphere.h"
@@ -21,6 +19,8 @@
 class Renderer
 {
 public:
+	void SetResolution( float width, float height );
+
 	void Render_Basic();
 	void Render_Shrinking();
 	void Render_SmoothScaling();
@@ -30,6 +30,7 @@ public:
 	void CreatePools( Heap* pChunkHeap, Heap* pCharHeap );
 	void DeletePools();
 #endif
+
 private:
 	void Render( const Sphere* spheres, unsigned iteration, unsigned sphereCount = 4u );
 
@@ -38,6 +39,9 @@ private:
 	MemoryPool* m_pCharPool;
 #endif
 	RayTracer m_rayTracer;
+
+	float m_fWidth;
+	float m_fHeight;
 };
 
 #endif

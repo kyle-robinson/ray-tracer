@@ -10,39 +10,60 @@
 //[/comment]
 int main( int argc, char **argv )
 {
+	// Get user input for render function
+	std::cout << "Please select a render function. [1-4]\n";
+	std::cout << " 1. Basic Render.\n";
+	std::cout << " 2. Shrinking Render.\n";
+	std::cout << " 3. Smooth Scale Render.\n";
+	std::cout << " 4. Json File Render.\n\n";
+
+	char inputRender;
+	bool shouldContinue = false;
+	while ( shouldContinue == false )
+	{
+		std::cin.get( inputRender );
+		if ( inputRender == '1' ||
+			inputRender == '2' ||
+			inputRender == '3' || 
+			inputRender == '4' )
+			shouldContinue = true;
+		std::cout << '\n';
+	};
+
+	// Get user input for target resolution
+	std::cout << "Please select a target resolution. [1-2]\n";
+	std::cout << " 1. 640 x 480.\n";
+	std::cout << " 2. 1920 x 1080\n";
+
+	char inputResolution;
+	shouldContinue = false;
+	while ( shouldContinue == false )
+	{
+		std::cin.get( inputResolution );
+		if ( inputResolution == '1' ||
+			inputResolution == '2' )
+			shouldContinue = true;
+		std::cout << '\n';
+	};
+
 #ifdef MEMORY_POOLS
 	Heap* pChunkHeap = HeapManager::CreateHeap( "Chunk Heap" );
 	Heap* pCharHeap = HeapManager::CreateHeap( "Char Heap" );
 #endif
 
 	Renderer renderer;
+	switch ( inputResolution )
+	{
+	case '1': renderer.SetResolution( 640.0f, 480.0f ); break;
+	case '2': renderer.SetResolution( 1920.0f, 1080.0f ); break;
+	}
 #ifdef MEMORY_POOLS
 	renderer.CreatePools( pChunkHeap, pCharHeap );
 #endif
 
-	char userInput;
-	bool shouldContinue = false;
-	do
-	{
-		// Get user input
-		std::cout << "Please select a render function. [1-4]\n";
-		std::cout << " 1. Basic Render.\n";
-		std::cout << " 2. Shrinking Render.\n";
-		std::cout << " 3. Smooth Scale Render.\n";
-		std::cout << " 4. Json File Render.\n\n";
-
-		std::cin.get( userInput );
-		if ( userInput == '1' ||
-			userInput == '2' ||
-			userInput == '3' || 
-			userInput == '4' )
-			shouldContinue = true;
-		std::system( "cls" );
-	} while ( shouldContinue == false );
-
 	// Select render function
 	Timer timer;
-	switch ( userInput )
+	switch ( inputRender )
 	{
 	case '1': renderer.Render_Basic(); break;
 	case '2': renderer.Render_Shrinking(); break;

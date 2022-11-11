@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "ThreadManager.h"
+#include <filesystem>
 
 #ifdef _WIN32
 #include <sstream>
@@ -8,6 +9,12 @@
 #endif
 
 #pragma region RENDER_SETUP
+void Renderer::SetResolution( float width, float height )
+{
+	m_fWidth = width;
+	m_fHeight = height;
+}
+
 void Renderer::Render_Basic()
 {
 	// Dynamic array is more efficient than vector
@@ -123,11 +130,11 @@ void Renderer::Render_JsonFile( const char* filepath )
 //[/comment]
 void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned sphereCount )
 {
-	float invWidth = 1.0f / WIDTH;
-	float invHeight = 1.0f / HEIGHT;
+	float invWidth = 1.0f / m_fWidth;
+	float invHeight = 1.0f / m_fHeight;
 
 	float fov = 30.0f;
-	float aspectratio = WIDTH / HEIGHT;
+	float aspectratio = m_fWidth / m_fHeight;
 	float angle = tanf( (float)M_PI * 0.5f * fov / 180.0f );
 
 	Vec3f** chunkArrs = new Vec3f * [THREAD_COUNT];
@@ -136,17 +143,17 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 	for ( unsigned i = 0u; i < THREAD_COUNT; i++ )
 	{
 #ifdef MEMORY_POOLS
-		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
-		charArrs[i] = (char*)m_pCharPool->Allocate( unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3u ) );
+		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+		charArrs[i] = (char*)m_pCharPool->Allocate( unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3u ) );
 #else
-		chunkArrs[i] = new Vec3f[( ( WIDTH * HEIGHT ) / THREAD_COUNT )];
-		charArrs[i] = new char[( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3];
+		chunkArrs[i] = new Vec3f[( ( m_fWidth * m_fHeight ) / THREAD_COUNT )];
+		charArrs[i] = new char[( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3];
 #endif
 	}
 
 	// Trace rays
 	int startY = 0;
-	int endY = (int)HEIGHT / THREAD_COUNT;
+	int endY = (int)m_fHeight / THREAD_COUNT;
 	for ( unsigned i = 0; i < THREAD_COUNT; ++i )
 	{
 		Vec3f* currentChunk = chunkArrs[i];
@@ -156,20 +163,20 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 #ifdef _WIN32
 			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
 			{
-				for ( float x = 0.0f; x < WIDTH; ++x )
+				for ( float x = 0.0f; x < m_fWidth; ++x )
 				{
 					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
 					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
 					Vec3f raydir( xx, yy, -1.0f );
 					raydir.normalize();
-					currentChunk[(int)WIDTH * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, sphereCount );
+					currentChunk[(int)m_fWidth * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, sphereCount );
 				}
 			} );
 #else
 			unsigned index = 0u;
 			for ( float y = (float)startY; y < endY; ++y )
 			{
-				for ( float x = 0.0f; x < WIDTH; ++x, index++ )
+				for ( float x = 0.0f; x < m_fWidth; ++x, index++ )
 				{
 					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
 					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
@@ -180,7 +187,7 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 			}
 #endif
 			int charIndex = 0;
-			for ( unsigned i = 0u; i < ( WIDTH * HEIGHT ) / THREAD_COUNT; ++i )
+			for ( unsigned i = 0u; i < ( m_fWidth * m_fHeight ) / THREAD_COUNT; ++i )
 			{
 				currentArr[charIndex] = (unsigned char)( ( 1.0f < currentChunk[i].x ? 1.0f : currentChunk[i].x ) * 255 );
 				currentArr[charIndex + 1] = (unsigned char)( ( 1.0f < currentChunk[i].y ? 1.0f : currentChunk[i].y ) * 255 );
@@ -188,22 +195,26 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 				charIndex += 3;
 			}
 		} );
-		startY += (int)HEIGHT / THREAD_COUNT;
-		endY += (int)HEIGHT / THREAD_COUNT;
+		startY += (int)m_fHeight / THREAD_COUNT;
+		endY += (int)m_fHeight / THREAD_COUNT;
 	}
 	ThreadManager::WaitForAllThreads();
 
 	// Save result to a PPM image (keep these flags if you compile under Windows)
+	std::string filepath = "./Resources/Spheres/";
+	if ( !std::filesystem::exists( filepath ) )
+		std::filesystem::create_directory( filepath );
+
 	std::stringstream ss;
-	ss << "./Resources/Spheres/spheres" << std::to_string( iteration ) << ".ppm";
+	ss << filepath << "spheres" << std::to_string( iteration ) << ".ppm";
 	std::string tempString = ss.str();
 	char* filename = (char*)tempString.c_str();
 
 	std::ofstream ofs( filename, std::ios::out | std::ios::binary );
-	ofs << "P6\n" << WIDTH << " " << HEIGHT << "\n255\n";
+	ofs << "P6\n" << m_fWidth << " " << m_fHeight << "\n255\n";
 	for ( unsigned i = 0u; i < THREAD_COUNT; i++ )
 	{
-		ofs.write( charArrs[i], std::streamsize( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
+		ofs.write( charArrs[i], std::streamsize( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3 ) );
 #ifdef MEMORY_POOLS
 		m_pChunkPool->Free( chunkArrs[i] );
 		m_pCharPool->Free( charArrs[i] );
@@ -226,8 +237,8 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 #ifdef MEMORY_POOLS
 void Renderer::CreatePools( Heap* pChunkHeap, Heap* pCharHeap )
 {
-	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
-	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, unsigned( ( ( WIDTH * HEIGHT ) / THREAD_COUNT ) * 3 ) );
+	m_pChunkPool = new( pChunkHeap ) MemoryPool( pChunkHeap, THREAD_COUNT, unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
+	m_pCharPool = new( pCharHeap ) MemoryPool( pCharHeap, THREAD_COUNT, unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3 ) );
 }
 
 void Renderer::DeletePools()
