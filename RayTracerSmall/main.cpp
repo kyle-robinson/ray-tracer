@@ -20,16 +20,25 @@ int main( int argc, char **argv )
 	renderer.CreatePools( pChunkHeap, pCharHeap );
 #endif
 
-	// Get user input
-	std::cout << "Please select a render function. [1-4]\n";
-	std::cout << " 1.\tBasic Render.\n";
-	std::cout << " 2.\tShrinking Render.\n";
-	std::cout << " 3.\tSmooth Scale Render.\n";
-	std::cout << " 4.\tJson File Render.\n";
-
 	char userInput;
-	std::cin.get( userInput );
-	std::system( "cls" );
+	bool shouldContinue = false;
+	do
+	{
+		// Get user input
+		std::cout << "Please select a render function. [1-4]\n";
+		std::cout << " 1.\tBasic Render.\n";
+		std::cout << " 2.\tShrinking Render.\n";
+		std::cout << " 3.\tSmooth Scale Render.\n";
+		std::cout << " 4.\tJson File Render.\n\n";
+
+		std::cin.get( userInput );
+		if ( userInput == '1' ||
+			userInput == '2' ||
+			userInput == '3' || 
+			userInput == '4' )
+			shouldContinue = true;
+		std::system( "cls" );
+	} while ( shouldContinue == false );
 
 	Timer timer;
 	switch ( userInput )
