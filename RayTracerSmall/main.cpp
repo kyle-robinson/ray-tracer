@@ -32,7 +32,7 @@ int main( int argc, char **argv )
 
 	// Get user input for target resolution
 	std::cout << "Please select a target resolution. [1-2]\n";
-	std::cout << " 1. 640 x 480.\n";
+	std::cout << " 1. 640 x 480\n";
 	std::cout << " 2. 1920 x 1080\n";
 
 	char inputResolution;
