@@ -2,8 +2,8 @@
 #ifndef JSONLOADER_H
 #define JSONLOADER_H
 
-#include "json.hpp"
 #include "JsonData.h"
+#include "../Resources/json.hpp"
 
 #include <vector>
 #include <string>

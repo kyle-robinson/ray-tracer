@@ -1,4 +1,5 @@
 #include "ThreadManager.h"
+#include "../Utility/Console.h"
 
 #if defined _WIN32
 std::vector<std::thread*> ThreadManager::m_pThreads;
@@ -22,7 +23,7 @@ void ThreadManager::CreateThread( std::function<void()> thread )
 	else if ( newThread == 0 )
 	{
 		m_pThreads.emplace_back( newThread );
-		task();
+		thread();
 		_exit( 0 );
 	}
 	else {

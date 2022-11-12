@@ -2,6 +2,8 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#else
+#include <stdio.h>
 #endif
 
 void Console::SetColor( Color color ) noexcept
@@ -23,13 +25,13 @@ void Console::SetColor( Color color ) noexcept
 #else
 	switch ( color )
 	{
-	case Color::WHITE:	 printf( "\033[0m"  ) break;
-	case Color::RED:	 printf( "\033[31m" ) break;
-	case Color::GREEN:	 printf( "\033[32m" ) break;
-	case Color::YELLOW:  printf( "\033[33m" ) break;
-	case Color::BLUE:	 printf( "\033[34m" ) break;
-	case Color::MAGENTA: printf( "\033[35m" ) break;
-	case Color::CYAN:	 printf( "\033[36m" ) break;
+	case Color::WHITE:	 printf( "\033[0m"  ); break;
+	case Color::RED:	 printf( "\033[31m" ); break;
+	case Color::GREEN:	 printf( "\033[32m" ); break;
+	case Color::YELLOW:  printf( "\033[33m" ); break;
+	case Color::BLUE:	 printf( "\033[34m" ); break;
+	case Color::MAGENTA: printf( "\033[35m" ); break;
+	case Color::CYAN:	 printf( "\033[36m" ); break;
 	}
 #endif
 }

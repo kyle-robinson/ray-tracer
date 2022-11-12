@@ -8,8 +8,8 @@
 #define MAX_RAY_DEPTH 5
 
 #include <vector>
-#include "Vec3.h"
-#include "Sphere.h"
+#include "../Utility/Vec3.h"
+#include "../Utility/Sphere.h"
 
 class RayTracer
 {

@@ -2,8 +2,8 @@
 #ifndef JSONDATA_H
 #define JSONDATA_H
 
-#include "Vec3.h"
-#include "Sphere.h"
+#include "../Utility/Vec3.h"
+#include "../Utility/Sphere.h"
 
 class JsonData
 {

@@ -1,7 +1,7 @@
-#include "Timer.h"
-#include "Console.h"
-#include "Renderer.h"
-#include "HeapManager.h"
+#include "Utility/Timer.h"
+#include "Utility/Console.h"
+#include "Graphics/Renderer.h"
+#include "Memory/HeapManager.h"
 
 //[comment]
 // In the main function, we will create the scene which is composed of 5 spheres
@@ -68,7 +68,7 @@ int main( int argc, char **argv )
 	case '1': renderer.Render_Basic(); break;
 	case '2': renderer.Render_Shrinking(); break;
 	case '3': renderer.Render_SmoothScaling(); break;
-	case '4': renderer.Render_JsonFile( "Resources/scene3.json" ); break;
+	case '4': renderer.Render_JsonFile( "Resources/scene1.json" ); break;
 	}
 
 	// Print time taken to render

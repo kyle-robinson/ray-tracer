@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
 #endif
 
 #include <vector>

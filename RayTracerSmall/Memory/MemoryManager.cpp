@@ -1,6 +1,6 @@
 #include "MemoryManager.h"
 #include "HeapManager.h"
-#include "Console.h"
+#include "../Utility/Console.h"
 #include <iostream>
 
 void* operator new ( size_t size )

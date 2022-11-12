@@ -11,10 +11,10 @@
 #define THREAD_COUNT 8
 
 #include <iostream>
-#include "Sphere.h"
 #include "RayTracer.h"
-#include "JsonLoader.h"
-#include "MemoryPool.h"
+#include "../Utility/Sphere.h"
+#include "../FileIO/JsonLoader.h"
+#include "../Memory/MemoryPool.h"
 
 class Renderer
 {

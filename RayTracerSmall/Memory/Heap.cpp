@@ -1,6 +1,6 @@
 #include "Heap.h"
-#include "Console.h"
 #include "MemoryManager.h"
+#include "../Utility/Console.h"
 
 void* Heap::operator new ( size_t size )
 {

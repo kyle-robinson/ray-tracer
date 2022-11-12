@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "ThreadManager.h"
+#include "../Memory/ThreadManager.h"
 #include <filesystem>
 
 #ifdef _WIN32
