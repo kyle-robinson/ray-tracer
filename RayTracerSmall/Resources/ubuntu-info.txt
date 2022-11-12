@@ -1,0 +1,7 @@
+To compile the project on Linux/Ubuntu, complete the following steps.
+
+1. Run the following command in the project directory to compile all the ".cpp" files, assuming the g++ compiler is installed.
+g++ -o linux-app *.cpp FileIO/*.cpp Graphics/*.cpp Memory/*.cpp Utility/*.cpp
+
+2. Run the following command to run the program. Note this file has been provided so the user could skip step 1.
+./linux-app

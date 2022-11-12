@@ -1,0 +1,4 @@
+Assumes the output ppm files are called "sphere1.ppm."
+Compiles a short video by stitching the output ppm files together.
+
+ffmpeg -framerate 25 -i Spheres/spheres%d.ppm -vcodec mpeg4 output.mp4
