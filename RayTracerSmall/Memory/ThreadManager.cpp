@@ -26,9 +26,6 @@ void ThreadManager::CreateThread( std::function<void()> thread )
 		thread();
 		_exit( 0 );
 	}
-	else {
-
-	}
 #endif
 }
 

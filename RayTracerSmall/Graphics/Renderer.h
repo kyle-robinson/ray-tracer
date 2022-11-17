@@ -8,7 +8,7 @@
 #endif
 
 #define MEMORY_POOLS
-#define THREAD_COUNT 8
+#define THREAD_COUNT 4
 
 #include <iostream>
 #include "RayTracer.h"
