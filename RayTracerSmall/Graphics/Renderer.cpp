@@ -146,8 +146,8 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 		chunkArrs[i] = (Vec3f*)m_pChunkPool->Allocate( unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * sizeof( Vec3f ) ) );
 		charArrs[i] = (char*)m_pCharPool->Allocate( unsigned( ( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3u ) );
 #else
-		chunkArrs[i] = new Vec3f[( ( m_fWidth * m_fHeight ) / THREAD_COUNT )];
-		charArrs[i] = new char[( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3u];
+		chunkArrs[i] = new Vec3f[unsigned( ( m_fWidth * m_fHeight ) / THREAD_COUNT )];
+		charArrs[i] = new char[unsigned( ( m_fWidth * m_fHeight ) / THREAD_COUNT ) * 3u];
 #endif
 	}
 
