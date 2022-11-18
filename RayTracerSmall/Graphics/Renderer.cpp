@@ -17,6 +17,8 @@ void Renderer::SetResolution( float width, float height )
 
 void Renderer::Render_Basic()
 {
+	m_bUseParallelFor = false;
+
 	// Dynamic array is more efficient than vector
 	Sphere* spheres = new Sphere[4];
 
@@ -36,6 +38,8 @@ void Renderer::Render_Basic()
 
 void Renderer::Render_Shrinking()
 {
+	m_bUseParallelFor = false;
+
 	// Dynamic array is more efficient than vector
 	Sphere* spheres = new Sphere[4];
 
@@ -78,6 +82,8 @@ void Renderer::Render_Shrinking()
 
 void Renderer::Render_SmoothScaling()
 {
+	m_bUseParallelFor = false;
+
 	// Dynamic array is more efficient than vector
 	Sphere* spheres = new Sphere[4];
 	
@@ -104,6 +110,11 @@ void Renderer::Render_SmoothScaling()
 
 void Renderer::Render_JsonFile( const char* filepath )
 {
+#if defined( _WIN32 )
+	m_bUseParallelFor = true;
+#else
+	m_bUseParallelFor = false;
+#endif
 	JsonData jsonData = *JsonLoader::LoadSphereInfo( filepath );
 	for ( unsigned i = 0u; i < jsonData.frameCount; ++i )
 	{
@@ -160,32 +171,39 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 		char* currentArr = charArrs[i];
 		ThreadManager::CreateThread( [&, currentChunk, currentArr, startY, endY]() -> void
 		{
-#if defined( _WIN32 ) && defined( PARALLEL_FOR )
-			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
+			// Only used for file loading on Windows
+			if ( m_bUseParallelFor )
 			{
-				for ( float x = 0.0f; x < m_fWidth; ++x )
+#if defined( _WIN32 )
+				concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
 				{
-					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
-					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
-					Vec3f raydir( xx, yy, -1.0f );
-					raydir.normalize();
-					currentChunk[(int)m_fWidth * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, sphereCount );
-				}
-			} );
-#else
-			unsigned index = 0u;
-			for ( float y = (float)startY; y < endY; ++y )
+					for ( float x = 0.0f; x < m_fWidth; ++x )
+					{
+						float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
+						float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
+						Vec3f raydir( xx, yy, -1.0f );
+						raydir.normalize();
+						currentChunk[(int)m_fWidth * ( y - startY ) + (int)x] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, sphereCount );
+					}
+				} );
+#endif
+			}
+			else
 			{
-				for ( float x = 0.0f; x < m_fWidth; ++x, index++ )
+				unsigned index = 0u;
+				for ( float y = (float)startY; y < endY; ++y )
 				{
-					float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
-					float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
-					Vec3f raydir( xx, yy, -1.0f );
-					raydir.normalize();
-					currentChunk[index] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, 4u );
+					for ( float x = 0.0f; x < m_fWidth; ++x, index++ )
+					{
+						float xx = ( 2.0f * ( ( x + 0.5f ) * invWidth ) - 1.0f ) * angle * aspectratio;
+						float yy = ( 1.0f - 2.0f * ( ( y + 0.5f ) * invHeight ) ) * angle;
+						Vec3f raydir( xx, yy, -1.0f );
+						raydir.normalize();
+						currentChunk[index] = m_rayTracer.Trace( Vec3f( 0.0f ), raydir, spheres, 0u, 4u );
+					}
 				}
 			}
-#endif
+
 			int charIndex = 0;
 			for ( unsigned i = 0u; i < ( m_fWidth * m_fHeight ) / THREAD_COUNT; ++i )
 			{

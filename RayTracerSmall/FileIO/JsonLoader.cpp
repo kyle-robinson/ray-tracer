@@ -13,8 +13,8 @@ JsonData* JsonLoader::LoadSphereInfo( const char* filepath )
 	unsigned noSpheres = 0u;
 
 	// Setup main data attributes
-	if ( HasAttribute( &jsonFile, "frameCount" ) )
-		noFrames = jsonFile["frameCount"];
+	if ( HasAttribute( &jsonFile, "Frame Count" ) )
+		noFrames = jsonFile["Frame Count"];
 	else
 	{
 		std::cout << "[ERROR] JsonLoader::LoadSphereInfo\n";
@@ -22,8 +22,8 @@ JsonData* JsonLoader::LoadSphereInfo( const char* filepath )
 
 	}
 
-	if ( HasAttribute( &jsonFile, "sphereCount" ) )
-		noSpheres = jsonFile["sphereCount"];
+	if ( HasAttribute( &jsonFile, "Sphere Count" ) )
+		noSpheres = jsonFile["Sphere Count"];
 	else
 	{
 		std::cout << "[ERROR] JsonLoader::LoadSphereInfo\n"; 
@@ -32,7 +32,7 @@ JsonData* JsonLoader::LoadSphereInfo( const char* filepath )
 
 	// Object to get json data
 	JsonData* animInfo = new JsonData( noSpheres, noFrames );
-	nlohmann::json sphereArr = jsonFile["spheres"];
+	nlohmann::json sphereArr = jsonFile["Spheres"];
 
 	for ( unsigned i = 0u; i < noSpheres; i++ )
 	{
@@ -40,38 +40,38 @@ JsonData* JsonLoader::LoadSphereInfo( const char* filepath )
 		nlohmann::json sphere = sphereArr.at( i );
 
 		// Setup sphere attributes
-		if ( HasAttribute( &sphere, "startPos" ) )
-			animInfo->sphereArr[i].center = LoadVec3f( sphere["startPos"] );
+		if ( HasAttribute( &sphere, "Start Position" ) )
+			animInfo->sphereArr[i].center = LoadVec3f( sphere["Start Position"] );
 
-		if ( HasAttribute( &sphere, "endPos" ) )
-			animInfo->sphereEndPositions[i] = LoadVec3f( sphere["endPos"] );
+		if ( HasAttribute( &sphere, "End Position" ) )
+			animInfo->sphereEndPositions[i] = LoadVec3f( sphere["End Position"] );
 
-		if ( HasAttribute( &sphere, "surfaceColor" ) )
-			animInfo->sphereArr[i].surfaceColor = LoadVec3f( sphere["surfaceColor"] );
+		if ( HasAttribute( &sphere, "Start Color" ) )
+			animInfo->sphereArr[i].surfaceColor = LoadVec3f( sphere["Start Color"] );
 
-		if ( HasAttribute( &sphere, "endSurfaceColor" ) )
-			animInfo->sphereEndColor[i] = LoadVec3f( sphere["endSurfaceColor"] );
+		if ( HasAttribute( &sphere, "End Color" ) )
+			animInfo->sphereEndColor[i] = LoadVec3f( sphere["End Color"] );
 
-		if ( HasAttribute( &sphere, "radius" ) )
+		if ( HasAttribute( &sphere, "Radius" ) )
 		{
-			float radius = sphere["radius"];
+			float radius = sphere["Radius"];
 			animInfo->sphereArr[i].radius = radius;
 			animInfo->sphereArr[i].radius2 = radius * radius;
 		}
 
-		if ( HasAttribute( &sphere, "reflection" ) )
-			animInfo->sphereArr[i].reflection = sphere["reflection"];
+		if ( HasAttribute( &sphere, "Reflection" ) )
+			animInfo->sphereArr[i].reflection = sphere["Reflection"];
 
-		if ( HasAttribute( &sphere, "transparency" ) )
-			animInfo->sphereArr[i].transparency = sphere["transparency"];
+		if ( HasAttribute( &sphere, "Transparency" ) )
+			animInfo->sphereArr[i].transparency = sphere["Transparency"];
 
-		if ( HasAttribute( &sphere, "emmisionColor" ) )
-			animInfo->sphereArr[i].emissionColor = LoadVec3f( sphere["emmisionColor"] );
+		if ( HasAttribute( &sphere, "Emission Color" ) )
+			animInfo->sphereArr[i].emissionColor = LoadVec3f( sphere["Emission Color"] );
 	}
 
 	//Calculate the sphere movement and color values accross each frame
-	animInfo->CalculateSphereMovements();
-	animInfo->CalculateSphereColor();
+	animInfo->CalculateSpherePositions();
+	animInfo->CalculateSphereColors();
 
 	Console::SetColor( Console::Color::WHITE );
 	return animInfo;

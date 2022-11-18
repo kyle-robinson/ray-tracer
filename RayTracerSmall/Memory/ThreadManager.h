@@ -19,7 +19,7 @@
 class ThreadManager
 {
 public:
-	static void CreateThread( std::function<void()> thread);
+	static void CreateThread( std::function<void()> thread );
 	static void WaitForAllThreads();
 private:
 #if defined _WIN32

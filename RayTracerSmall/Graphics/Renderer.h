@@ -7,7 +7,6 @@
 #define INFINITY 1e8
 #endif
 
-//#define PARALLEL_FOR
 #define MEMORY_POOLS
 #define THREAD_COUNT 16
 
@@ -40,9 +39,9 @@ private:
 	MemoryPool* m_pCharPool;
 #endif
 	RayTracer m_rayTracer;
-
 	float m_fWidth;
 	float m_fHeight;
+	bool m_bUseParallelFor;
 };
 
 #endif

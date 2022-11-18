@@ -1,56 +1,56 @@
 {
-  "frameCount": 250,
-  "sphereCount": 5,
-  "spheres": [
+  "Frame Count": 250,
+  "Sphere Count": 5,
+  "Spheres": [
     {
-      "startPos": [ 0.0, 0.0, -100.0 ],
-      "endPos": [ 20.0, 0.0, -100.0 ],
-      "radius": 5.0,
-      "surfaceColor": [ 1.0, 0.32, 0.36 ],
-      "reflection": 0.2,
-      "transparency": 0.4,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 1.0, 1.0, 0.36 ]
+      "Start Position": [ 0.0, 0.0, -100.0 ],
+      "End Position": [ 20.0, 0.0, -100.0 ],
+      "Start Color": [ 1.0, 0.32, 0.36 ],
+      "End Color": [ 1.0, 1.0, 0.36 ],
+      "Radius": 5.0,
+      "Reflection": 0.2,
+      "Transparency": 0.4,
+      "Emission Color": [ 0.0, 0.0, 0.0 ]
     },
     {
-      "startPos": [ 0.0, 10.0, -100.0 ],
-      "endPos": [ -8.0, 10.0, -100.0 ],
-      "radius": 3.0,
-      "surfaceColor": [ 0.23, 0.45, 0.78 ],
-      "reflection": 0.7,
-      "transparency": 0.3,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.23, 0.45, 1.0 ]
+      "Start Position": [ 0.0, 10.0, -100.0 ],
+      "End Position": [ -8.0, 10.0, -100.0 ],
+      "Start Color": [ 0.23, 0.45, 0.78 ],
+      "End Color": [ 0.23, 0.45, 1.0 ],
+      "Radius": 3.0,
+      "Reflection": 0.7,
+      "Transparency": 0.3,
+      "Emission Color": [ 0.0, 0.0, 0.0 ]
     },
     {
-      "startPos": [ 0.0, -10.0, -100.0 ],
-      "endPos": [ 6.0, -10.0, -100.0 ],
-      "radius": 3.0,
-      "surfaceColor": [ 0.6, 0.32, 0.78 ],
-      "reflection": 0.6,
-      "transparency": 1.0,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.6, 0.43, 1.0 ]
+      "Start Position": [ 0.0, -10.0, -100.0 ],
+      "End Position": [ 6.0, -10.0, -100.0 ],
+      "Start Color": [ 0.6, 0.32, 0.78 ],
+      "End Color": [ 0.6, 0.43, 1.0 ],
+      "Radius": 3.0,
+      "Reflection": 0.6,
+      "Transparency": 1.0,
+      "Emission Color": [ 0.0, 0.0, 0.0 ]
     },
     {
-      "startPos": [ 0.0, 20.0, -100.0 ],
-      "endPos": [ -4.0, 20.0, -100.0 ],
-      "radius": 2.0,
-      "surfaceColor": [ 1.0, 0.23, 0.45 ],
-      "reflection": 0.2,
-      "transparency": 0.7,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.45, 0.54 ]
+      "Start Position": [ 0.0, 20.0, -100.0 ],
+      "End Position": [ -4.0, 20.0, -100.0 ],
+      "Start Color": [ 1.0, 0.23, 0.45 ],
+      "End Color": [ 0.0, 0.45, 0.54 ],
+      "Radius": 2.0,
+      "Reflection": 0.2,
+      "Transparency": 0.7,
+      "Emission Color": [ 0.0, 0.0, 0.0 ]
     },
     {
-      "startPos": [ 0.0, -20.0, -100.0 ],
-      "endPos": [ 30.0, -20.0, -100.0 ],
-      "radius": 2.0,
-      "surfaceColor": [ 0.0, 0.34, 0.56 ],
-      "reflection": 1.0,
-      "transparency": 0.8,
-      "emmisionColor": [ 0.0, 0.0, 0.0 ],
-      "endSurfaceColor": [ 0.0, 0.57, 0.43 ]
+      "Start Position": [ 0.0, -20.0, -100.0 ],
+      "End Position": [ 30.0, -20.0, -100.0 ],
+      "Start Color": [ 0.0, 0.34, 0.56 ],
+      "End Color": [ 0.0, 0.57, 0.43 ],
+      "Radius": 2.0,
+      "Reflection": 1.0,
+      "Transparency": 0.8,
+      "Emission Color": [ 0.0, 0.0, 0.0 ]
     }
   ],
   "version": "1.0"

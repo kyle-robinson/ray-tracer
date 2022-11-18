@@ -29,7 +29,7 @@ void JsonData::Cleanup()
 	sphereColorPerFrame = nullptr;
 }
 
-void JsonData::CalculateSphereMovements()
+void JsonData::CalculateSpherePositions()
 {
 	// Iterate over each sphere
 	for ( unsigned i = 0u; i < sphereCount; i++ )
@@ -43,7 +43,7 @@ void JsonData::CalculateSphereMovements()
 	}
 }
 
-void JsonData::CalculateSphereColor()
+void JsonData::CalculateSphereColors()
 {
 	// Iterate over each sphere
 	for ( unsigned i = 0u; i < sphereCount; i++ )

@@ -10,8 +10,8 @@ class JsonData
 public:
 	JsonData( int spherecount, int framecount );
 	void Cleanup();
-	void CalculateSphereMovements();
-	void CalculateSphereColor();
+	void CalculateSpherePositions();
+	void CalculateSphereColors();
 	
 	int frameCount;
 	int sphereCount;
