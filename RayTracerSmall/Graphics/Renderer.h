@@ -7,8 +7,9 @@
 #define INFINITY 1e8
 #endif
 
+//#define PARALLEL_FOR
 #define MEMORY_POOLS
-#define THREAD_COUNT 4
+#define THREAD_COUNT 16
 
 #include <iostream>
 #include "RayTracer.h"

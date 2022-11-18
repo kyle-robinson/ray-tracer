@@ -160,7 +160,7 @@ void Renderer::Render( const Sphere* spheres, unsigned iteration, unsigned spher
 		char* currentArr = charArrs[i];
 		ThreadManager::CreateThread( [&, currentChunk, currentArr, startY, endY]() -> void
 		{
-#ifdef _WIN32
+#if defined( _WIN32 ) && defined( PARALLEL_FOR )
 			concurrency::parallel_for( startY, endY, [&, currentChunk, currentArr, startY, endY]( size_t y ) -> void
 			{
 				for ( float x = 0.0f; x < m_fWidth; ++x )
