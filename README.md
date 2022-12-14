@@ -6,7 +6,7 @@ A ray-tracing algorithm that incoporates several memory management features and 
 <img src="scene-1.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" />
 
 <img src="scene-2.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" /> &nbsp;
-<img src="scene-3.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" />
+<img src="scene-3.PNG" alt="DirectX Framework Thumbnail" border="10" width="45.5%" />
 
 ## List of Features
 
