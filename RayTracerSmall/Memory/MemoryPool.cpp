@@ -43,7 +43,7 @@ MemoryPool::~MemoryPool()
 	delete m_pMemBlock;
 }
 
-// Allocate memory if memory pool cannot any
+// Allocate memory if memory pool cannot allocate any
 void* MemoryPool::Allocate( unsigned requestedBytes )
 {
 	Node* pCurUnit = m_pFreeMemBlock;
