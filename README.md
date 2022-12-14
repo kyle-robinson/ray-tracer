@@ -1,6 +1,6 @@
 # Ray-Tracer Optimizations
 
-A ray-tracing algorithm that incoporates several memory management features and utilizes various low-level optimization techniques to greatly improve performance and efficiency.<br/>
+A ray-tracing algorithm that incorporates several memory management features and utilizes various low-level optimization techniques to greatly improve performance and efficiency.<br/>
 
 <img src="scene-0.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" /> &nbsp;
 <img src="scene-1.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" />
