@@ -1,5 +1,11 @@
 # Ray-Tracer Optimizations
 
+[![MSBuild-Debug](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-debug.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-debug.yml)
+&nbsp;
+[![MSBuild-Release](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-release.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-release.yml)
+&nbsp;
+[![CodeQL](https://github.com/kyle-robinson/ray-tracer/actions/workflows/codeql.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/codeql.yml)
+
 A ray-tracing algorithm that incorporates several memory management features and utilizes various low-level optimization techniques to greatly improve performance and efficiency.<br/>
 
 <img src="scene-0.PNG" alt="DirectX Framework Thumbnail" border="10" width="45%" /> &nbsp;
