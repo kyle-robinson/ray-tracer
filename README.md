@@ -46,6 +46,6 @@ Please refer to the _ffmpeg-info.txt_ file in the _Resources_ folder on the step
 
 ## Appendices
 
-<img src="scene-1.PNG" alt="DirectX Framework Thumbnail" border="10" width="32%" /> &nbsp;
-<img src="scene-2.PNG" alt="DirectX Framework Thumbnail" border="10" width="32%" /> &nbsp;
-<img src="scene-3.PNG" alt="DirectX Framework Thumbnail" border="10" width="32%" />
+<img src="scene-1.mp4" alt="DirectX Framework Thumbnail" border="10" width="32%" /> &nbsp;
+<img src="scene-2.mp4" alt="DirectX Framework Thumbnail" border="10" width="32%" /> &nbsp;
+<img src="scene-3.mp4" alt="DirectX Framework Thumbnail" border="10" width="32%" />

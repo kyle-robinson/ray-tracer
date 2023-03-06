@@ -24,7 +24,7 @@ int main( int argc, char **argv )
 		std::cin.get( inputRender );
 		if ( inputRender == '1' ||
 			inputRender == '2' ||
-			inputRender == '3' || 
+			inputRender == '3' ||
 			inputRender == '4' )
 			shouldContinue = true;
 		std::cout << '\n';
@@ -68,7 +68,7 @@ int main( int argc, char **argv )
 	case '1': renderer.Render_Basic(); break;
 	case '2': renderer.Render_Shrinking(); break;
 	case '3': renderer.Render_SmoothScaling(); break;
-	case '4': renderer.Render_JsonFile( "Resources/scene1.json" ); break;
+	case '4': renderer.Render_JsonFile( "Resources/scene3.json" ); break;
 	}
 
 	// Print time taken to render
