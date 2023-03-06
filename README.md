@@ -46,8 +46,6 @@ Please refer to the _ffmpeg-info.txt_ file in the _Resources_ folder on the step
 
 ## Appendices
 
-https://user-images.githubusercontent.com/39779606/223144464-7d74675f-af60-4316-bfc6-60571e857d32.mp4
-
-https://user-images.githubusercontent.com/39779606/223144670-b9a21fcb-7b96-4787-85ea-2b7b3c64cbb3.mp4
-
-https://user-images.githubusercontent.com/39779606/223144732-48e049a0-87bf-40ea-a30a-a08cff4dff44.mp4
+| <img src="https://user-images.githubusercontent.com/39779606/223155367-369bb328-350b-404c-b537-3e2f03dd01a9.gif"/> | <img src="https://user-images.githubusercontent.com/39779606/223155363-3936f8c2-417a-478f-a579-2be5b28eff74.gif"/> | <img src="https://user-images.githubusercontent.com/39779606/223155355-cad14e86-ba37-465b-ba14-29036e4e3700.gif"/> |
+| :---: | :---: | :---: |
+| *Scene 1* | *Scene 2* | *Scene 3* |
