@@ -21,10 +21,10 @@ A ray-tracing algorithm that incorporates several memory management features and
 
 ## Getting Started
 
-The advanced graphics framework provides numerous tools for interacting with the graphics features that have been implemented. Refer to the following information on how to install and use the application.
+Refer to the following information on how to install and use the application.
 
 ### Dependencies
-To use the framework, the following prerequisites must be met.
+To use the ray tracer, the following prerequisites must be met.
 * Windows 10+
 * Visual Studio
 * Git Version Control
@@ -34,7 +34,7 @@ The framework only requires the following external files to function.
 
 ### Installing
 
-To download a copy of the framework, select "Download ZIP" from the main code repository page, or create a fork of the project. More information on forking a GitHub respository can be found [here](https://www.youtube.com/watch?v=XTolZqmZq6s).
+To download a copy of the ray tracer, select "Download ZIP" from the main code repository page, or create a fork of the project. More information on forking a GitHub respository can be found [here](https://www.youtube.com/watch?v=XTolZqmZq6s).
 
 ### Executing program
 
@@ -42,7 +42,7 @@ As the project only requires the use of the nlohmann json header and no other ad
 
 Please refer to the _ubuntu-info.txt_ file in the _Resources_ folder on the steps needed to run the application on the Ubuntu distro on the Linux platform.
 
-Please refer to the _ffmpeg-info.txt_ file in the _Resources_ folder on the steps needed to view the generated files from the ray tracer.
+Please refer to the _ffmpeg-info.txt_ file in the _Resources_ folder on the steps needed to view the files generated from the ray tracer.
 
 ## Appendices
 
