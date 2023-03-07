@@ -24,12 +24,12 @@ A ray-tracing algorithm that incorporates several memory management features and
 Refer to the following information on how to install and use the application.
 
 ### Dependencies
-To use the ray tracer, the following prerequisites must be met.
+To use the application, the following prerequisites must be met.
 * Windows 10+
 * Visual Studio
 * Git Version Control
 
-The framework only requires the following external files to function.
+The application only requires the following external files to function.
 * nlohmann json
 
 ### Installing
