@@ -5,6 +5,8 @@
 [![MSBuild-Release](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-release.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/msbuild-release.yml)
 &nbsp;
 [![CodeQL](https://github.com/kyle-robinson/ray-tracer/actions/workflows/codeql.yml/badge.svg)](https://github.com/kyle-robinson/ray-tracer/actions/workflows/codeql.yml)
+&nbsp;
+<img src="https://img.shields.io/static/v1?label=University&message=Year 3&color=954af7&style=flat&logo=nintendogamecube&logoColor=CCCCCC" />
 
 A ray-tracing algorithm that incorporates several memory management features and utilizes various low-level optimization techniques to greatly improve performance and efficiency.
 
